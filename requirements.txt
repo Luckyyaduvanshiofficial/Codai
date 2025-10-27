@@ -1,0 +1,6 @@
+# CodaiPro Dependencies
+# Use Python 3.11 (NOT 3.13 - compatibility issues!)
+
+customtkinter==5.2.2
+llama-cpp-python==0.2.90
+pyperclip==1.8.2  # For clipboard support (copy code functionality)
