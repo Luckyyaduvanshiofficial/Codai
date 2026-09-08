@@ -3,209 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodaiPro - AI-Powered Coding Assistant</title>
-    <meta name="description" content="The ultimate offline AI coding assistant for students and developers. Perfect for lab exams and environments without internet access.">
+    <title>CodaiPro — the offline AI coding assistant for students</title>
+    <meta name="description" content="CodaiPro runs a local language model on your own Windows machine. No internet, no accounts, no API keys. Built for lab exams, competitions, and restricted networks.">
+    <link rel="canonical" href="https://luckyyaduvanshiofficial.github.io/Codai/">
+    <meta name="theme-color" content="#f6f4ee">
+
+    <!-- Social sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="CodaiPro">
+    <meta property="og:url" content="https://luckyyaduvanshiofficial.github.io/Codai/">
+    <meta property="og:title" content="CodaiPro — the offline AI coding assistant for students">
+    <meta property="og:description" content="A real AI coding assistant that runs on your own machine. No internet, no accounts, no API keys. Built for lab exams and restricted networks.">
+    <meta name="twitter:card" content="summary">
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "CodaiPro",
+      "softwareVersion": "2.1",
+      "operatingSystem": "Windows 10, Windows 11",
+      "applicationCategory": "DeveloperApplication",
+      "description": "Offline AI coding assistant that runs local GGUF models via llama.cpp on Windows. No internet, no accounts, no API keys.",
+      "url": "https://luckyyaduvanshiofficial.github.io/Codai/",
+      "downloadUrl": "https://github.com/Luckyyaduvanshiofficial/Codai/releases/latest",
+      "license": "https://opensource.org/licenses/MIT",
+      "author": {
+        "@type": "Person",
+        "name": "Lucky Yaduvanshi",
+        "url": "https://luckyyaduvanshiofficial.github.io"
+      },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Privacy-friendly analytics slot.
+         To count visits with real storage, create a free site at goatcounter.com
+         and paste below (no cookies, no personal data):
+         <script data-goatcounter="https://YOURCODE.goatcounter.com/count"
+                 async src="https://gc.zgo.at/count.js"></script>
+         A lightweight live view counter is already active in the footer. -->
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23f6f4ee'/%3E%3Ctext x='32' y='46' font-family='Georgia, serif' font-size='40' font-weight='bold' fill='%23c23a24' text-anchor='middle'%3EC.%3C/text%3E%3C/svg%3E">
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <header class="hero">
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="nav-logo">
-                    <h2>🚀 CodaiPro</h2>
-                </div>
-                <ul class="nav-menu">
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#download">Download</a></li>
-                    <li><a href="#docs">Docs</a></li>
-                    <li><a href="https://github.com/luckyyaduvanshi/codaipro" target="_blank">GitHub</a></li>
-                </ul>
-            </div>
-        </nav>
-        
-        <div class="hero-content">
-            <h1>AI-Powered Coding Assistant</h1>
-            <p class="hero-subtitle">The ultimate offline AI coding assistant for students and developers</p>
-            <p class="hero-description">Perfect for lab exams, coding competitions, and environments without internet access</p>
-            
-            <div class="hero-badges">
-                <span class="badge">✅ 100% Offline</span>
-                <span class="badge">🎓 Student Friendly</span>
-                <span class="badge">🚀 Open Source</span>
-                <span class="badge">💻 Portable</span>
-            </div>
-            
-            <div class="hero-buttons">
-                <a href="#download" class="btn btn-primary">📥 Download v2.1</a>
-                <a href="https://github.com/luckyyaduvanshi/codaipro" class="btn btn-secondary" target="_blank">⭐ Star on GitHub</a>
-            </div>
+    <header class="masthead">
+        <div class="wrap masthead-row">
+            <a class="wordmark" href="#top">CodaiPro<span class="dot">.</span></a>
+            <nav class="site-nav" aria-label="Site">
+                <a href="#syllabus">Syllabus</a>
+                <a href="#download">Download</a>
+                <a href="#from-the-developer">Developer</a>
+                <a href="https://github.com/Luckyyaduvanshiofficial/Codai" target="_blank" rel="noopener">GitHub</a>
+            </nav>
         </div>
     </header>
 
-    <section id="features" class="features">
-        <div class="container">
-            <h2>Why Choose CodaiPro?</h2>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🎓</div>
-                    <h3>Perfect for Students</h3>
-                    <p>Designed specifically for lab environments and exam situations where internet access is restricted.</p>
+    <main id="top">
+        <section class="hero wrap">
+            <div class="hero-copy">
+                <p class="kicker">Free and open source · v2.1</p>
+                <h1>The AI coding assistant that works when the Wi-Fi doesn&rsquo;t.</h1>
+                <p class="lede">CodaiPro runs a real language model on your own machine. No internet, no accounts, no API keys. Made for lab exams, coding competitions, and any room where the network is off limits.</p>
+                <div class="cta-row">
+                    <a class="btn btn-primary" href="#download">Download for Windows</a>
+                    <a class="btn" href="https://github.com/Luckyyaduvanshiofficial/Codai" target="_blank" rel="noopener">Star on GitHub</a>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3>100% Offline</h3>
-                    <p>No internet connection required. Your code never leaves your machine, ensuring complete privacy.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🚀</div>
-                    <h3>AI-Powered</h3>
-                    <p>Advanced AI engine for code generation, explanation, debugging, and optimization.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">💻</div>
-                    <h3>Portable</h3>
-                    <p>Run directly from USB drive. No installation required, works on any Windows machine.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Fast & Lightweight</h3>
-                    <p>Optimized for low-resource environments. Runs smoothly on lab computers.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🌐</div>
-                    <h3>Multi-Language</h3>
-                    <p>Support for Python, JavaScript, Java, C++, and 20+ programming languages.</p>
-                </div>
+                <p class="gh-chip" id="gh-chip"><a href="https://github.com/Luckyyaduvanshiofficial/Codai/stargazers" target="_blank" rel="noopener"><span class="star" aria-hidden="true">★</span> <span id="gh-chip-text">Star the repository on GitHub</span></a></p>
             </div>
-        </div>
-    </section>
 
-    <section id="download" class="download">
-        <div class="container">
-            <h2>Download CodaiPro</h2>
-            <p>Choose the installation method that works best for you</p>
-            
-            <div class="download-options">
-                <div class="download-card recommended">
-                    <div class="download-badge">Recommended</div>
-                    <h3>📦 Portable Executable</h3>
-                    <p>Perfect for students and lab environments</p>
-                    <ul>
-                        <li>✅ No installation required</li>
-                        <li>✅ Works on restricted computers</li>
-                        <li>✅ Run from USB drive</li>
-                        <li>✅ Ready to use immediately</li>
-                    </ul>
-                    <a href="https://github.com/luckyyaduvanshi/codaipro/releases/latest" class="btn btn-primary" target="_blank">
-                        📥 Download Portable (Windows)
-                    </a>
-                    <small>~500MB | Windows 10/11</small>
-                </div>
-                
-                <div class="download-card">
-                    <h3>🐍 Python Installation</h3>
-                    <p>For developers who want to customize</p>
-                    <ul>
-                        <li>✅ Full source code access</li>
-                        <li>✅ Easy customization</li>
-                        <li>✅ Latest features</li>
-                        <li>✅ Contribute to project</li>
-                    </ul>
-                    <a href="https://github.com/luckyyaduvanshi/codaipro" class="btn btn-secondary" target="_blank">
-                        📂 Clone Repository
-                    </a>
-                    <small>Requires Python 3.11+</small>
-                </div>
+            <aside class="sheet" aria-label="Answer sheet">
+                <p class="sheet-title">Answer sheet</p>
+                <dl class="sheet-fields">
+                    <div><dt>Candidate</dt><dd>You</dd></div>
+                    <div><dt>Subject</dt><dd>Coding</dd></div>
+                    <div><dt>Internet required</dt><dd>None</dd></div>
+                    <div><dt>AI model</dt><dd>Local GGUF, on your disk</dd></div>
+                    <div><dt>Data sent anywhere</dt><dd>Nothing</dd></div>
+                    <div><dt>Marks</dt><dd>Full</dd></div>
+                </dl>
+                <p class="sheet-stamp">Offline approved</p>
+            </aside>
+        </section>
+
+        <section class="band" aria-label="Key facts">
+            <div class="wrap band-row">
+                <span>100% offline</span><span class="star" aria-hidden="true">✳</span>
+                <span>Runs from a USB stick</span><span class="star" aria-hidden="true">✳</span>
+                <span>No telemetry</span><span class="star" aria-hidden="true">✳</span>
+                <span>MIT licensed</span><span class="star" aria-hidden="true">✳</span>
+                <span>Windows 10/11</span>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="use-cases">
-        <div class="container">
-            <h2>Perfect Use Cases</h2>
-            
-            <div class="use-cases-grid">
-                <div class="use-case">
-                    <h3>🏫 Lab Exams</h3>
-                    <p>Works offline, portable, no installation needed. Perfect for university computer labs.</p>
-                </div>
-                
-                <div class="use-case">
-                    <h3>💻 Coding Competitions</h3>
-                    <p>Fast code generation, instant debugging, and algorithm explanations.</p>
-                </div>
-                
-                <div class="use-case">
-                    <h3>📚 Learning & Practice</h3>
-                    <p>Code explanations, step-by-step algorithm breakdowns, and learning assistance.</p>
-                </div>
-                
-                <div class="use-case">
-                    <h3>🏢 Restricted Networks</h3>
-                    <p>No internet dependency, security compliant, works in corporate environments.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="about-developer">
-        <div class="container">
-            <h2>About the Developer</h2>
-            <div class="developer-info">
-                <div class="developer-text">
-                    <h3>Lucky Yaduvanshi</h3>
-                    <p class="developer-title">Full-Stack Developer & DevOps Enthusiast</p>
-                    <p>As a computer science student, I experienced firsthand the frustration of lab environments without internet access. During crucial exams and projects, when you need coding assistance the most, traditional AI tools are unavailable.</p>
-                    <p>CodaiPro solves this problem by bringing powerful AI assistance directly to your machine, no internet required. My mission is making AI-powered coding assistance available offline for students worldwide.</p>
-                    
-                    <div class="developer-links">
-                        <a href="https://luckyyaduvanshiofficial.github.io" target="_blank" class="btn btn-outline">🌐 Portfolio</a>
-                        <a href="https://github.com/luckyyaduvanshi" target="_blank" class="btn btn-outline">💻 GitHub</a>
+        <section id="syllabus" class="syllabus wrap">
+            <header class="section-head">
+                <p class="kicker">Section 01</p>
+                <h2>The syllabus</h2>
+            </header>
+            <ol class="syllabus-list">
+                <li>
+                    <span class="no" aria-hidden="true">01</span>
+                    <div>
+                        <h3>Built for the lab</h3>
+                        <p>Designed for exam halls and university machines where the network is locked down and installs are not an option.</p>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                </li>
+                <li>
+                    <span class="no" aria-hidden="true">02</span>
+                    <div>
+                        <h3>Your code never leaves</h3>
+                        <p>Inference happens on your CPU. Nothing is uploaded, logged, or phoned home. Privacy is the default, not a setting.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="no" aria-hidden="true">03</span>
+                    <div>
+                        <h3>Real models, local hardware</h3>
+                        <p>Runs quantized GGUF models through llama.cpp — Phi-3.5 and Qwen2.5-Coder, chosen for small machines and short patience.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="no" aria-hidden="true">04</span>
+                    <div>
+                        <h3>Portable by design</h3>
+                        <p>The whole application fits in a folder. Copy it to a USB stick, run the executable, and it follows you between labs.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="no" aria-hidden="true">05</span>
+                    <div>
+                        <h3>Light on old machines</h3>
+                        <p>Tuned for 4 GB of RAM and older CPUs. If the lab computer can open a browser, it can run CodaiPro.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="no" aria-hidden="true">06</span>
+                    <div>
+                        <h3>Speaks many languages</h3>
+                        <p>Python, JavaScript, Java, C++, and more. Generation, explanation, debugging, and optimization in one chat window.</p>
+                    </div>
+                </li>
+            </ol>
+        </section>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>CodaiPro</h3>
-                    <p>AI-powered coding assistant for everyone, everywhere.</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="https://github.com/luckyyaduvanshi/codaipro/releases">Download</a></li>
-                        <li><a href="https://github.com/luckyyaduvanshi/codaipro">GitHub</a></li>
-                        <li><a href="https://github.com/luckyyaduvanshi/codaipro/wiki">Documentation</a></li>
-                        <li><a href="https://github.com/luckyyaduvanshi/codaipro/issues">Support</a></li>
+        <section id="download" class="download wrap">
+            <header class="section-head">
+                <p class="kicker">Section 02</p>
+                <h2>Download</h2>
+                <p class="section-lede">Two ways in. Both free, and both offline after setup.</p>
+            </header>
+
+            <div class="options">
+                <article class="option option-primary">
+                    <p class="stamp">Recommended</p>
+                    <h3>Portable executable</h3>
+                    <p>Unzip, double-click, done. Nothing to install, nothing to configure.</p>
+                    <ul class="ticks">
+                        <li>Runs straight from a USB stick</li>
+                        <li>No admin rights needed</li>
+                        <li>Single-instance guard keeps lab machines clean</li>
                     </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Developer</h4>
-                    <ul>
-                        <li><a href="https://luckyyaduvanshiofficial.github.io">Portfolio</a></li>
-                        <li><a href="https://github.com/luckyyaduvanshi">GitHub Profile</a></li>
-                        <li><a href="https://github.com/luckyyaduvanshi/codaipro/blob/main/CONTRIBUTING.md">Contribute</a></li>
+                    <a class="btn btn-primary" href="https://github.com/Luckyyaduvanshiofficial/Codai/releases/latest" target="_blank" rel="noopener">Download portable (Windows)</a>
+                    <p class="meta">~500 MB · Windows 10/11 · model downloaded separately</p>
+                </article>
+
+                <article class="option">
+                    <h3>From source</h3>
+                    <p>For developers who want to read it, change it, or ship something back.</p>
+                    <ul class="ticks">
+                        <li>Full source code, MIT licensed</li>
+                        <li>Plain Python — no build step to run it</li>
+                        <li>Pull requests welcome</li>
                     </ul>
-                </div>
+                    <a class="btn" href="https://github.com/Luckyyaduvanshiofficial/Codai" target="_blank" rel="noopener">Clone the repository</a>
+                    <p class="meta">Requires Python 3.11 · 3.12/3.13 need C/C++ build tools</p>
+                </article>
             </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2024 Lucky Yaduvanshi. Licensed under MIT License.</p>
-                <p>Made with ❤️ for the coding community</p>
+
+            <aside class="models">
+                <h3>Bring a model</h3>
+                <p>The download ships without a model on purpose — you pick the brain. Drop one .gguf file into the <code>models</code> folder and CodaiPro finds it on its own.</p>
+                <table>
+                    <thead>
+                        <tr><th scope="col">Model</th><th scope="col">Size</th><th scope="col">Best for</th><th scope="col">Get it</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Phi-3.5-mini</th>
+                            <td>2.3 GB</td>
+                            <td>Best speed/quality balance</td>
+                            <td><a href="https://huggingface.co/microsoft/Phi-3.5-mini-instruct-gguf" target="_blank" rel="noopener">Hugging Face ↗</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Qwen2.5-Coder-3B</th>
+                            <td>2 GB</td>
+                            <td>Fast coding on low-spec machines</td>
+                            <td><a href="https://huggingface.co/Qwen/Qwen2.5-Coder-3B-Instruct-GGUF" target="_blank" rel="noopener">Hugging Face ↗</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Qwen2.5-Coder-7B</th>
+                            <td>4.7 GB</td>
+                            <td>Most powerful answers</td>
+                            <td><a href="https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct-GGUF" target="_blank" rel="noopener">Hugging Face ↗</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="meta">One-time download, at home. After that, everything runs offline.</p>
+            </aside>
+        </section>
+
+        <section id="poll" class="poll wrap">
+            <header class="section-head">
+                <p class="kicker">Section 03</p>
+                <h2>Quick poll</h2>
+                <p class="section-lede">Which model are you running? Click your answer: the vote is stored as an issue in the public repository and the tally below is counted live from it. Your choice is remembered in this browser only, and anyone can audit the ballot box.</p>
+            </header>
+
+            <div class="poll-options" role="group" aria-label="Poll options">
+                <a class="btn poll-option" data-poll-label="Phi-3.5-mini" href="https://github.com/Luckyyaduvanshiofficial/Codai/issues/new?title=%5BPoll%5D%20Phi-3.5-mini&body=Vote%20cast%20from%20the%20CodaiPro%20website%20poll.%20One%20issue%20%3D%20one%20vote." target="_blank" rel="noopener">Phi-3.5-mini</a>
+                <a class="btn poll-option" data-poll-label="Qwen2.5-Coder-3B" href="https://github.com/Luckyyaduvanshiofficial/Codai/issues/new?title=%5BPoll%5D%20Qwen2.5-Coder-3B&body=Vote%20cast%20from%20the%20CodaiPro%20website%20poll.%20One%20issue%20%3D%20one%20vote." target="_blank" rel="noopener">Qwen2.5-Coder-3B</a>
+                <a class="btn poll-option" data-poll-label="Qwen2.5-Coder-7B" href="https://github.com/Luckyyaduvanshiofficial/Codai/issues/new?title=%5BPoll%5D%20Qwen2.5-Coder-7B&body=Vote%20cast%20from%20the%20CodaiPro%20website%20poll.%20One%20issue%20%3D%20one%20vote." target="_blank" rel="noopener">Qwen2.5-Coder-7B</a>
+                <a class="btn poll-option" data-poll-label="Still deciding" href="https://github.com/Luckyyaduvanshiofficial/Codai/issues/new?title=%5BPoll%5D%20Still%20deciding&body=Vote%20cast%20from%20the%20CodaiPro%20website%20poll.%20One%20issue%20%3D%20one%20vote." target="_blank" rel="noopener">Still deciding</a>
             </div>
+
+            <div class="poll-results" id="poll-results" hidden>
+                <p class="poll-total" id="poll-total" aria-live="polite"></p>
+                <ol class="poll-rows" id="poll-rows"></ol>
+            </div>
+        </section>
+
+        <section class="venues wrap">
+            <header class="section-head">
+                <p class="kicker">Section 04</p>
+                <h2>Where it earns its keep</h2>
+            </header>
+            <ol class="venues-list">
+                <li>
+                    <h3>Lab exams</h3>
+                    <p>No installation, no network, no excuses. Copy it to the machine, answer the paper.</p>
+                </li>
+                <li>
+                    <h3>Coding competitions</h3>
+                    <p>Fast generation and instant debugging when every minute is on the clock.</p>
+                </li>
+                <li>
+                    <h3>Learning and practice</h3>
+                    <p>Step-by-step explanations and algorithm breakdowns at your own pace.</p>
+                </li>
+                <li>
+                    <h3>Restricted networks</h3>
+                    <p>Security-compliant by construction: there is no connection to restrict.</p>
+                </li>
+            </ol>
+        </section>
+
+        <section id="from-the-developer" class="letter-section wrap">
+            <header class="section-head">
+                <p class="kicker">Section 05</p>
+                <h2>From the developer</h2>
+            </header>
+            <div class="letter">
+                <p>As a computer science student, I kept losing my best tool exactly when I needed it most. In the lab, during an exam, halfway through a project — no internet, so no AI assistance. Everyone else had to make do alone.</p>
+                <p>CodaiPro is my answer. It puts a capable coding assistant on your own machine, in a folder you can carry, with no connection to ask permission from. My mission is simple: AI help for every student, everywhere, online or not.</p>
+                <p class="signature">Lucky Yaduvanshi</p>
+                <p class="letter-links"><a href="https://luckyyaduvanshiofficial.github.io" target="_blank" rel="noopener">Portfolio</a><span aria-hidden="true"> · </span><a href="https://github.com/Luckyyaduvanshiofficial" target="_blank" rel="noopener">GitHub</a></p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="colophon">
+        <div class="wrap colophon-row">
+            <div>
+                <p class="wordmark">CodaiPro<span class="dot">.</span></p>
+                <p class="colophon-tag">An offline AI coding assistant for students, by a student.</p>
+            </div>
+            <nav class="colophon-nav" aria-label="Footer">
+                <a href="https://github.com/Luckyyaduvanshiofficial/Codai/releases">Download</a>
+                <a href="https://github.com/Luckyyaduvanshiofficial/Codai">Source</a>
+                <a href="https://github.com/Luckyyaduvanshiofficial/Codai/wiki">Docs</a>
+                <a href="https://github.com/Luckyyaduvanshiofficial/Codai/issues">Issues</a>
+            </nav>
+        </div>
+        <div class="wrap colophon-base">
+            <p>© <span id="year">2026</span> Lucky Yaduvanshi. MIT licensed.</p>
+            <p>No external fonts, no frameworks, no cookie banners. This page loads offline too.</p>
+            <p class="views"><img src="https://hits.sh/luckyyaduvanshiofficial.github.io/Codai.svg" alt="Page views" height="18" loading="lazy"></p>
         </div>
     </footer>
 

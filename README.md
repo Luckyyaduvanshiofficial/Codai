@@ -3,15 +3,15 @@
 <div align="center">
 
 ![CodaiPro Logo](https://img.shields.io/badge/CodaiPro-v2.1-blue?style=for-the-badge&logo=python)
-[![Open Source](https://img.shields.io/badge/Open%20Source-❤️-red?style=for-the-badge)](https://github.com/luckyyaduvanshi/codaipro)
-[![Offline Ready](https://img.shields.io/badge/Works%20Offline-✅-green?style=for-the-badge)](https://github.com/luckyyaduvanshi/codaipro)
-[![Student Friendly](https://img.shields.io/badge/Perfect%20for%20Labs-🎓-orange?style=for-the-badge)](https://github.com/luckyyaduvanshi/codaipro)
+[![Open Source](https://img.shields.io/badge/Open%20Source-❤️-red?style=for-the-badge)](https://github.com/Luckyyaduvanshiofficial/Codai)
+[![Offline Ready](https://img.shields.io/badge/Works%20Offline-✅-green?style=for-the-badge)](https://github.com/Luckyyaduvanshiofficial/Codai)
+[![Student Friendly](https://img.shields.io/badge/Perfect%20for%20Labs-🎓-orange?style=for-the-badge)](https://github.com/Luckyyaduvanshiofficial/Codai)
 
 **🌟 The Ultimate Offline AI Coding Assistant for Students & Developers**
 
 *Perfect for lab exams, coding competitions, and environments without internet access*
 
-[📥 Download Latest Release](https://github.com/luckyyaduvanshi/codaipro/releases) • [🌐 Official Website](https://codai.pro) • [📖 Documentation](https://github.com/luckyyaduvanshi/codaipro/wiki)
+[📥 Download Latest Release](https://github.com/Luckyyaduvanshiofficial/Codai/releases) • [🌐 Official Website](https://codai.pro) • [📖 Documentation](https://github.com/Luckyyaduvanshiofficial/Codai/wiki)
 
 </div>
 
@@ -74,7 +74,7 @@
 ### Option 1: 📦 Portable Executable (Recommended for Labs)
 ```bash
 # Download from releases page
-1. Go to: https://github.com/luckyyaduvanshi/codaipro/releases
+1. Go to: https://github.com/Luckyyaduvanshiofficial/Codai/releases
 2. Download: CodaiPro-v2.1-Portable.zip
 3. Extract and run: CodaiPro_v21.exe
 ```
@@ -84,7 +84,7 @@
 ### Option 2: 🐍 Python Installation (For Developers)
 ```bash
 # Clone repository
-git clone https://github.com/luckyyaduvanshi/codaipro.git
+git clone https://github.com/Luckyyaduvanshiofficial/Codai.git
 cd codaipro
 
 # Install dependencies (Python 3.11 recommended)
@@ -103,7 +103,7 @@ python launcher.py
 ### Option 3: 🔧 Build from Source
 ```bash
 # Clone and build
-git clone https://github.com/luckyyaduvanshi/codaipro.git
+git clone https://github.com/Luckyyaduvanshiofficial/Codai.git
 cd codaipro
 
 # Build portable executable
@@ -117,7 +117,7 @@ BUILD_V21.bat
 ## 🚀 Quick Start Guide
 
 ### For Students (Lab Environment)
-1. **Download** the portable version from [releases](https://github.com/luckyyaduvanshi/codaipro/releases)
+1. **Download** the portable version from [releases](https://github.com/Luckyyaduvanshiofficial/Codai/releases)
 2. **Extract** to your USB drive or desktop
 3. **Download a model** (one-time, at home) into the `models` folder — see [below](#-downloading-a-model)
 4. **Double-click** `CodaiPro_v21.exe`
@@ -217,14 +217,14 @@ CodaiPro runs a local GGUF model through llama.cpp — no API keys, no cloud cal
 We welcome contributions from the community! Here's how you can help:
 
 ### 🐛 Bug Reports
-Found a bug? Please [open an issue](https://github.com/luckyyaduvanshi/codaipro/issues) with:
+Found a bug? Please [open an issue](https://github.com/Luckyyaduvanshiofficial/Codai/issues) with:
 - Detailed description
 - Steps to reproduce
 - System information
 - Screenshots (if applicable)
 
 ### 💡 Feature Requests
-Have an idea? [Create a feature request](https://github.com/luckyyaduvanshi/codaipro/issues) with:
+Have an idea? [Create a feature request](https://github.com/Luckyyaduvanshiofficial/Codai/issues) with:
 - Clear description of the feature
 - Use case and benefits
 - Implementation suggestions
@@ -304,9 +304,9 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 ## 📞 Support & Contact
 
 ### 🆘 Need Help?
-- 📖 **Documentation**: [GitHub Wiki](https://github.com/luckyyaduvanshi/codaipro/wiki)
-- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/luckyyaduvanshi/codaipro/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/luckyyaduvanshi/codaipro/discussions)
+- 📖 **Documentation**: [GitHub Wiki](https://github.com/Luckyyaduvanshiofficial/Codai/wiki)
+- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/Luckyyaduvanshiofficial/Codai/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/Luckyyaduvanshiofficial/Codai/discussions)
 
 ### 🌐 Connect With Me
 - **Portfolio**: [luckyyaduvanshiofficial.github.io](https://luckyyaduvanshiofficial.github.io)
