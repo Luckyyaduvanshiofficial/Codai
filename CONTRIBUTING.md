@@ -72,14 +72,15 @@ test(core): add unit tests for launcher
 
 ### Testing
 ```bash
-# Run tests before submitting
-python -m pytest tests/
+# Smoke-test the proxy endpoints (runtime must be running)
+python test_proxy.py
 
-# Test the build process
-BUILD_V21.bat
+# Run from source
+python dev/controller.py
 
-# Test single instance protection
-TEST_V21.bat
+# Windows launcher + cleanup
+run.bat
+kill.bat
 ```
 
 ## 🔄 Pull Request Process
@@ -119,20 +120,18 @@ Add screenshots for UI changes
 ## 🏗️ Project Structure
 
 ```
-codaipro/
-├── launcher.py              # Main entry point
-├── codaipro_v2.py          # GUI application
-├── backend_server.py       # FastAPI backend
-├── requirements.txt        # Dependencies
-├── BUILD_V21.bat          # Build script
-├── KILL_V21.bat           # Cleanup script
-├── TEST_V21.bat           # Test script
-├── .github/               # GitHub workflows
-│   └── workflows/
-│       └── release.yml    # Release automation
-├── docs/                  # Documentation
-├── tests/                 # Test files
-└── screenshots/           # UI screenshots
+CodaiPro/
+├── dev/                      # Python controller (config, engine, proxy, system)
+├── ui/                       # Browser chat UI
+├── engine/                   # llama-server binary (not in git)
+├── models/                   # GGUF models (not in git)
+├── config.json               # Runtime configuration
+├── run.bat / kill.bat        # Windows launcher / cleanup
+├── Codai.spec                # PyInstaller packaging
+├── installer.iss             # Inno Setup installer
+├── website/                  # Public site (GitHub Pages)
+├── docs/                     # Architecture docs and diagrams
+└── .github/workflows/        # Release + Pages automation
 ```
 
 ## 🎯 Priority Areas
@@ -195,9 +194,9 @@ python -m pytest tests/build/
 - **Screenshots** and examples
 
 ### Learning Opportunities
-- **Python GUI development** with CustomTkinter
-- **API development** with FastAPI
-- **AI integration** with Llama.cpp
+- **Python systems programming** with process supervision and HTTP proxying
+- **Local AI integration** with llama.cpp (`llama-server`)
+- **Vanilla JS UI engineering** for low-end hardware
 - **DevOps practices** with GitHub Actions
 
 ## 🏆 Recognition

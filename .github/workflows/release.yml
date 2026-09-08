@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version to release (e.g., v2.1.1)'
+        description: 'Version to release (e.g., v3.0.0)'
         required: true
-        default: 'v2.1.1'
+        default: 'v3.0.0'
 
 env:
   VERSION: ${{ github.event.inputs.version || github.ref_name }}
@@ -27,27 +27,63 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Ensure models folder exists
-      run: mkdir models
-
-    - name: Install dependencies
+    - name: Install build dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install pyinstaller
+        pip install psutil pyinstaller
 
-    - name: Build executable
+    - name: Download llama-server engine (Windows CPU)
+      shell: pwsh
       run: |
-        python -m PyInstaller --onedir --windowed --name "CodaiPro_v21" --noconsole --add-data "models;models" --hidden-import="uvicorn" --hidden-import="fastapi" --hidden-import="llama_cpp" --hidden-import="customtkinter" --hidden-import="tkinter" --hidden-import="requests" --hidden-import="json" --hidden-import="threading" --hidden-import="queue" --hidden-import="time" --hidden-import="os" --hidden-import="sys" --hidden-import="ctypes" --hidden-import="socket" --collect-all="customtkinter" --collect-all="llama_cpp" launcher.py
+        $releases = Invoke-RestMethod "https://api.github.com/repos/ggml-org/llama.cpp/releases?per_page=20"
+        $release = $releases | Where-Object { $_.assets.Count -gt 3 } | Select-Object -First 1
+        $asset = $release.assets | Where-Object { $_.name -match 'bin-win-cpu-x64\.zip$' } | Select-Object -First 1
+        if (-not $asset) { throw "No Windows CPU engine asset found" }
+        Write-Host "Downloading engine: $($asset.name)"
+        Invoke-WebRequest $asset.browser_download_url -OutFile engine.zip
+        Expand-Archive engine.zip -DestinationPath engine
+        Remove-Item engine.zip
+        Get-ChildItem engine | Select-Object -First 10
 
-    - name: Create portable package
+    - name: Build Codai.exe
       run: |
-        mkdir portable
-        xcopy /e /i /q "dist\CodaiPro_v21" "portable\CodaiPro_v21"
+        python -m PyInstaller Codai.spec
+
+    - name: Assemble portable package
+      shell: pwsh
+      run: |
+        $dest = "portable\CodaiPro"
+        New-Item -ItemType Directory -Force -Path "$dest\engine", "$dest\models" | Out-Null
+        Copy-Item "dist\Codai.exe" $dest
+        Copy-Item -Recurse -Force "dev" "$dest\dev"
+        Copy-Item -Recurse -Force "ui" "$dest\ui"
+        Copy-Item -Recurse -Force "engine" "$dest\engine"
+        Copy-Item "config.json", "run.bat", "kill.bat", "help.txt" $dest
+        $modelReadme = @"
+        Drop ONE .gguf model file in this folder, then double-click run.bat.
+
+        Default model expected by config.json:
+          gemma-3-1b-it-Q4_K_M.gguf  (0.81 GB)
+          https://huggingface.co/bartowski/google_gemma-3-1b-it-GGUF
+
+        Other good picks (see the website guide):
+          Qwen3.5-0.8B (0.58 GB) - newest
+          Qwen3-0.6B   (0.48 GB)
+          Llama 3.2 1B (0.81 GB)
+          Phi-3.5-mini (2.3 GB)
+          Qwen2.5-Coder-3B / 7B - best coding quality
+
+        Using a different filename? Set "model_name" in config.json.
+        Full guide: https://luckyyaduvanshiofficial.github.io/Codai/#download
+        "@
+        Set-Content -Path "$dest\models\README.txt" -Value $modelReadme
+        Write-Host "Portable package assembled:"
+        Get-ChildItem -Recurse $dest -File | Measure-Object -Property Length -Sum | ForEach-Object { "{0} files, {1:N1} MB" -f $_.Count, ($_.Sum / 1MB) }
 
     - name: Create ZIP archive
+      shell: pwsh
       run: |
-        powershell Compress-Archive -Path "portable\*" -DestinationPath "CodaiPro-${{ env.VERSION }}-Portable-Windows.zip"
+        Compress-Archive -Path "portable\*" -DestinationPath "CodaiPro-${{ env.VERSION }}-Portable-Windows.zip"
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
@@ -76,30 +112,32 @@ jobs:
         tag_name: ${{ env.VERSION }}
         name: CodaiPro ${{ env.VERSION }}
         body: |
-          ## CodaiPro ${{ env.VERSION }}
+          ## CodaiPro ${{ env.VERSION }} — Codai Pro
 
-          New recommended models for weak lab PCs, and cleaner answers from thinking models.
+          The biggest upgrade yet: the desktop GUI is gone. Codai now runs the official `llama-server` engine with a fast browser chat UI — one process to launch, streaming answers, and a controller that watches and restarts the engine if it ever crashes.
 
-          ### New
-          - Four sub-1 GB models join the recommended list and run on almost any lab PC: **Qwen3.5-0.8B** (newest), Qwen3-0.6B, Gemma 3 1B Instruct, Llama 3.2 1B Instruct — with direct download links on the website and in `DOWNLOAD_MODEL.bat`
-          - Thinking models (Qwen3 / Qwen3.5) no longer show their scratchpad: the `<think>` block is stripped and you get the answer. If the model runs out of tokens mid-thought, you get a clear hint instead of an empty reply
+          ### New architecture
+          - Real llama.cpp engine: `llama-server` runs locally, chat streams token by token
+          - Browser UI with markdown rendering, code copy buttons, stop button, and conversation memory
+          - Controller with health monitoring, auto-restart, hardware-aware tuning (RAM/CPU tiers), rotating logs and crash reports
+          - Single portable folder: unzip, add a model, double-click `run.bat`
 
-          ### Fixed in v2.1.1 (recap)
-          - Fresh installs work again: all backend dependencies are declared
-          - AI engine upgraded to llama-cpp-python 0.3.x; every model gets its own chat template
-          - Single-instance guard watches the real backend port (8765); lockfiles are cleaned on exit; no duplicate backend spawn
-          - Generation timeout raised to 300 s; optional GPU offload via `CODAIPRO_GPU_LAYERS`
+          ### In the box
+          - `Codai.exe` (packaged controller), `engine\llama-server.exe` (official llama.cpp build)
+          - `run.bat` starts everything, waits for readiness, opens your browser
+          - `kill.bat` force-cleans Codai processes and locks
 
           ### First run
-          1. Download a model into the `models` folder — sub-1 GB picks and direct links: https://luckyyaduvanshiofficial.github.io/Codai/#download
-          2. Run `CodaiPro_v21.exe`
+          1. Unzip anywhere writable (not `C:\Program Files`)
+          2. Drop one model into `models\` — default is `gemma-3-1b-it-Q4_K_M.gguf` (0.81 GB); see the [model guide](https://luckyyaduvanshiofficial.github.io/Codai/#download)
+          3. Double-click `run.bat` and wait for `[READY]`
 
           ### System requirements
           - Windows 10/11 (64-bit)
-          - 4 GB RAM minimum
-          - 2 GB free storage + 0.5–5 GB for one model
+          - 4 GB RAM minimum (2 GB works with the smallest models)
+          - ~1 GB free for the app + 0.5–5 GB for one model
 
-          **Full changelog**: https://github.com/Luckyyaduvanshiofficial/Codai/compare/git-tag-v2.1.0...${{ env.VERSION }}
+          **Full changelog**: https://github.com/Luckyyaduvanshiofficial/Codai/compare/v2.1.2...${{ env.VERSION }}
         draft: false
         prerelease: false
         files: CodaiPro-${{ env.VERSION }}-Portable-Windows.zip

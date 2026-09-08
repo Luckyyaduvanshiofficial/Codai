@@ -1,0 +1,67 @@
+CODAI PRO HELP
+===============
+
+What Codai Pro is
+Codai Pro is a local offline AI coding assistant. It starts a local engine, exposes a local proxy, and opens the browser UI on your machine. No cloud account is required for the core local flow.
+
+Default local addresses
+- UI / Proxy: http://127.0.0.1:8081/
+- Health: http://127.0.0.1:8081/health
+- Shutdown: http://127.0.0.1:8081/shutdown
+- Engine: http://127.0.0.1:8082/
+
+How to run
+1. Double-click run.bat from the install folder, or launch Codai Pro from the Start Menu / desktop shortcut.
+2. Wait for the launcher to report that Codai is ready.
+3. Your browser should open automatically to the local UI.
+
+How to stop
+- Close the launcher window normally when you are done.
+- Codai uses a graceful shutdown path so the engine can stop cleanly and release its lock file.
+- If something gets stuck, run kill.bat from the install folder.
+
+Important files
+- run.bat: main launcher for installed and development runs
+- kill.bat: emergency cleanup / stop script
+- config.json: runtime ports and selected model
+- logs\: runtime logs, crash logs, and lock file state
+- models\: bundled GGUF model files used by the engine
+
+Model requirement
+- Codai Pro needs at least one .gguf model in the models folder.
+- The installer is expected to bundle that model.
+- If the model is missing, Codai cannot finish startup.
+
+Common startup checks
+1. Confirm the models folder contains the configured GGUF file.
+2. Confirm ports 8081 and 8082 are not already occupied by another app.
+3. If startup was interrupted previously, run kill.bat and try again.
+4. Check logs\codai.log or logs\crash.log for details if the launcher does not reach READY.
+
+Health behavior
+- /health may respond before the engine is fully usable.
+- Codai waits for the health payload to report a ready phase before treating startup as complete.
+
+Installed app behavior
+- In the repository, Codai can run from Python source.
+- In an installed copy, Codai prefers the packaged runtime path so the app behaves like a standalone install.
+
+Troubleshooting
+- Browser says "127.0.0.1 refused to connect":
+  The local proxy never became ready. Check logs and confirm the model exists.
+- Launcher keeps printing dots:
+  The app is still waiting for the local service to become healthy, or the engine failed during startup.
+- "No Codai process to kill":
+  kill.bat did not find any Codai-owned processes. This is normal if the app is already stopped.
+
+Developer notes
+- Main detailed documentation: Documentation.md
+- Contributor onboarding guide: docs\contributor-project-info.md
+- Product overview and quickstart: readme.md
+
+Release checklist
+1. Verify the model exists in models\ before compiling installer.iss.
+2. Compile installer.iss in Inno Setup.
+3. Confirm the installer size reflects the bundled model.
+4. Install the built package on a clean path and verify the UI opens on 127.0.0.1:8081.
+

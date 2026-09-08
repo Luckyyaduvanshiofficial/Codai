@@ -1,16 +1,6 @@
-# CodaiPro Dependencies
-# Python 3.11 recommended. On Python 3.12/3.13 llama-cpp-python is built from
-# source and needs CMake + a C/C++ compiler (Visual Studio Build Tools on Windows).
+# CodaiPro (Codai Pro) Dependencies
+# The Python side is a lightweight controller: it serves the UI, proxies to
+# llama-server, and manages the engine process. All AI inference happens in
+# the llama-server binary (see engine/ folder and README).
 
-# GUI
-customtkinter==5.2.2
-pyperclip==1.8.2  # For clipboard support (copy code functionality)
-
-# Backend (FastAPI server)
-fastapi>=0.110,<1.0
-uvicorn>=0.27,<1.0
-pydantic>=2.6,<3.0
-requests>=2.31,<3.0
-
-# AI inference
-llama-cpp-python>=0.3.23,<0.4
+psutil>=5.9.0

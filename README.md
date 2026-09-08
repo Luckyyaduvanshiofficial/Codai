@@ -1,151 +1,84 @@
-# 🚀 CodaiPro v2.1 - AI-Powered Coding Assistant
+# 🚀 CodaiPro v3.0 (Codai Pro) - Offline AI Coding Assistant
 
 <div align="center">
 
-![CodaiPro Logo](https://img.shields.io/badge/CodaiPro-v2.1-blue?style=for-the-badge&logo=python)
+![CodaiPro Logo](https://img.shields.io/badge/CodaiPro-v3.0-blue?style=for-the-badge&logo=python)
 [![Open Source](https://img.shields.io/badge/Open%20Source-❤️-red?style=for-the-badge)](https://github.com/Luckyyaduvanshiofficial/Codai)
 [![Offline Ready](https://img.shields.io/badge/Works%20Offline-✅-green?style=for-the-badge)](https://github.com/Luckyyaduvanshiofficial/Codai)
 [![Student Friendly](https://img.shields.io/badge/Perfect%20for%20Labs-🎓-orange?style=for-the-badge)](https://github.com/Luckyyaduvanshiofficial/Codai)
 
-**🌟 The Ultimate Offline AI Coding Assistant for Students & Developers**
+**🌟 A private, offline AI coding assistant that runs the official llama.cpp engine and opens in your browser**
 
-*Perfect for lab exams, coding competitions, and environments without internet access*
+*Built for lab exams, coding competitions, and any room where the network is off limits*
 
-[📥 Download Latest Release](https://github.com/Luckyyaduvanshiofficial/Codai/releases) • [🌐 Official Website](https://codai.pro) • [📖 Documentation](https://github.com/Luckyyaduvanshiofficial/Codai/wiki)
-
-</div>
-
----
-
-## 📸 Screenshots
-
-<div align="center">
-
-### 🖥️ Main Interface
-![CodaiPro Main Interface](screenshots/main-interface.png)
-
-### 💬 AI Chat Assistant
-![AI Chat](screenshots/ai-chat.png)
-
-### ⚙️ Settings Panel
-![Settings](screenshots/settings.png)
+[📥 Download Latest Release](https://github.com/Luckyyaduvanshiofficial/Codai/releases/latest) • [🌐 Website](https://luckyyaduvanshiofficial.github.io/Codai/) • [📖 Model Guide](https://luckyyaduvanshiofficial.github.io/Codai/#download)
 
 </div>
 
 ---
+
+## What changed in v3.0
+
+The desktop GUI is gone. CodaiPro now runs the **official `llama-server` engine** from llama.cpp with a fast **browser chat UI** — streaming answers token by token, markdown rendering, code copy buttons, a stop button, and a controller that watches the engine and restarts it if it crashes. One folder, one script, no Python GUI toolkits, no heavyweight dependencies.
+
+![Codai architecture](docs/image/architechture-codai.svg)
 
 ## ✨ Why CodaiPro?
 
-### 🎓 **Perfect for Students & Lab Exams**
-- **100% Offline** - No internet connection required
-- **Portable** - Run from USB drive in any lab
-- **Fast Setup** - Ready to use in seconds
-- **Lab-Friendly** - Works on restricted networks
+- **100% Offline** — inference happens on your CPU; nothing leaves the machine
+- **Real llama.cpp engine** — `llama-server` with streaming, not a Python wrapper
+- **Browser UI** — ChatGPT-style chat with markdown and code blocks, opened automatically
+- **Self-healing** — engine health monitor, auto-restart, stale lock recovery, crash reports
+- **Hardware-aware** — RAM/CPU tiers tune context size and threads automatically
+- **Portable** — one folder on a USB stick; `run.bat` does everything
 
-### 🚀 **Powerful Features**
-- **AI Code Generation** - Write code faster with AI assistance
-- **Multi-Language Support** - Python, JavaScript, Java, C++, and more
-- **Code Explanation** - Understand complex algorithms instantly
-- **Debug Assistant** - Find and fix bugs quickly
-- **Code Optimization** - Improve performance and readability
+## 🚀 Quick Start (Windows)
 
-### 🔒 **Enhanced Stability**
-- **Single Instance Protection** - Prevents multiple windows
-- **Crash Recovery** - Auto-saves your work
-- **Memory Optimized** - Runs smoothly on low-spec machines
-- **Clean Exit** - No background processes left running
-
----
-
-## 🎯 Perfect Use Cases
-
-| Scenario | Why CodaiPro Excels |
-|----------|-------------------|
-| **🏫 Lab Exams** | Works offline, portable, no installation needed |
-| **💻 Coding Competitions** | Fast code generation, instant debugging |
-| **📚 Learning** | Code explanations, algorithm breakdowns |
-| **🏢 Restricted Networks** | No internet dependency, security compliant |
-| **⚡ Quick Prototyping** | Rapid development with AI assistance |
-
----
-
-## 📥 Installation Options
-
-### Option 1: 📦 Portable Executable (Recommended for Labs)
-```bash
-# Download from releases page
-1. Go to: https://github.com/Luckyyaduvanshiofficial/Codai/releases
-2. Download: CodaiPro-v2.1-Portable.zip
-3. Extract and run: CodaiPro_v21.exe
+```text
+1. Download the portable zip from releases and unzip to a writable folder
+2. Drop ONE .gguf model into the models/ folder (default: gemma-3-1b-it-Q4_K_M.gguf)
+3. Double-click run.bat
+4. Wait for [READY] - your browser opens http://127.0.0.1:8081/
+5. Press any key in the launcher window to stop Codai safely
 ```
 
-> **Note**: The portable zip does **not** include an AI model (it's ~2-5GB). Download one model into the `models` folder next to the exe — see [Downloading a Model](#-downloading-a-model). This is a one-time step; after that everything runs offline.
+The release zip includes `Codai.exe` and the official `engine\llama-server.exe` — the only thing you add is a model.
 
-### Option 2: 🐍 Python Installation (For Developers)
+## 🐍 Run from Source (Windows / Linux / macOS)
+
 ```bash
-# Clone repository
 git clone https://github.com/Luckyyaduvanshiofficial/Codai.git
-cd codaipro
+cd Codai
 
-# Install dependencies (Python 3.11 recommended)
-pip install -r requirements.txt
+pip install -r requirements.txt   # just psutil
 
-# Download an AI model (one-time, needs internet)
-# Either run the helper...
-DOWNLOAD_MODEL.bat
-# ...or manually place a .gguf file into the models/ folder
-# (create the folder if it doesn't exist)
+# Windows
+run.bat
 
-# Run application
-python launcher.py
+# Linux / macOS
+python dev/controller.py
 ```
 
-### Option 3: 🔧 Build from Source
-```bash
-# Clone and build
-git clone https://github.com/Luckyyaduvanshiofficial/Codai.git
-cd codaipro
+From source you also need the engine binary in `engine/`:
 
-# Build portable executable
-BUILD_V21.bat
-
-# Find executable in: dist_portable/CodaiPro_v21/
-```
-
----
-
-## 🚀 Quick Start Guide
-
-### For Students (Lab Environment)
-1. **Download** the portable version from [releases](https://github.com/Luckyyaduvanshiofficial/Codai/releases)
-2. **Extract** to your USB drive or desktop
-3. **Download a model** (one-time, at home) into the `models` folder — see [below](#-downloading-a-model)
-4. **Double-click** `CodaiPro_v21.exe`
-5. **Start coding** with AI assistance!
-
-### For Developers
-1. **Clone** the repository
-2. **Install** Python 3.11 and dependencies (`pip install -r requirements.txt`)
-3. **Download** a model into the `models/` folder
-4. **Run** `python launcher.py`
-5. **Customize** and contribute!
-
----
+- **Windows**: `winget install llama.cpp`, then copy `llama-server.exe` into `engine\` — or grab `llama-bXXXX-bin-win-cpu-x64.zip` from [llama.cpp releases](https://github.com/ggml-org/llama.cpp/releases)
+- **Linux**: download `llama-bXXXX-bin-ubuntu-x64.tar.gz` from [llama.cpp releases](https://github.com/ggml-org/llama.cpp/releases) and put `llama-server` (+ the `.so` files) into `engine/`
+- **macOS**: use the llama.cpp release binaries or `brew install llama.cpp`, then symlink `llama-server` into `engine/`
 
 ## 🧠 Downloading a Model
 
-CodaiPro runs a local GGUF model through llama.cpp — no API keys, no cloud calls. You need one `.gguf` file in the `models/` folder (next to `launcher.py` or the exe). The app auto-detects whichever you install.
+CodaiPro runs a local GGUF model. Drop one `.gguf` file into the `models/` folder. The default expected by `config.json` is **Gemma 3 1B** — using a different file? Set `"model_name"` in `config.json` (or run `DOWNLOAD_MODEL.bat`).
 
 **Weak lab PC? Take a tiny one — under 1 GB, runs on almost anything:**
 
 | Model | Size | Direct download (Q4_K_M) |
 |-------|------|--------------------------|
+| **Gemma 3 1B Instruct** (default) | 0.81GB | [Download](https://huggingface.co/bartowski/google_gemma-3-1b-it-GGUF/resolve/main/google_gemma-3-1b-it-Q4_K_M.gguf) · [Model page](https://huggingface.co/bartowski/google_gemma-3-1b-it-GGUF) |
 | **Qwen3.5-0.8B** (newest) | 0.58GB | [Download](https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/resolve/main/Qwen_Qwen3.5-0.8B-Q4_K_M.gguf) · [Model page](https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF) |
 | Qwen3-0.6B | 0.48GB | [Download](https://huggingface.co/bartowski/Qwen_Qwen3-0.6B-GGUF/resolve/main/Qwen_Qwen3-0.6B-Q4_K_M.gguf) · [Model page](https://huggingface.co/bartowski/Qwen_Qwen3-0.6B-GGUF) |
-| Gemma 3 1B Instruct | 0.81GB | [Download](https://huggingface.co/bartowski/google_gemma-3-1b-it-GGUF/resolve/main/google_gemma-3-1b-it-Q4_K_M.gguf) · [Model page](https://huggingface.co/bartowski/google_gemma-3-1b-it-GGUF) |
 | Llama 3.2 1B Instruct | 0.81GB | [Download](https://huggingface.co/bartowski/Llama-3.2-1B-Instruct-GGUF/resolve/main/Llama-3.2-1B-Instruct-Q4_K_M.gguf) · [Model page](https://huggingface.co/bartowski/Llama-3.2-1B-Instruct-GGUF) |
 
-The Qwen 3 family thinks before it answers; CodaiPro strips the scratchpad so you only see the result (v2.1.2+).
+The Qwen 3 family thinks before it answers; the engine keeps the scratchpad out of your way.
 
 **When 2 GB is fine — a better coder:**
 
@@ -156,101 +89,70 @@ The Qwen 3 family thinks before it answers; CodaiPro strips the scratchpad so yo
 | **Qwen2.5-Coder-7B** | 4.7GB | Most powerful (q4_k_m) | [Qwen/Qwen2.5-Coder-7B-Instruct-GGUF](https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct-GGUF) |
 
 - Pick the **q4** / **q4_k_m** quantization for the best CPU performance.
-- If a model downloads as split parts (`...-00001-of-00002.gguf`), keep **all** parts together in `models/` — llama.cpp loads them as one.
-- Run `DOWNLOAD_MODEL.bat` for a guided download with these links.
+- If a model downloads as split parts, keep all parts together in `models/`.
+- Chat templates are applied by the engine from the model metadata — every model above just works.
 
----
+## 🏗️ Architecture
+
+```text
+CodaiPro/
+├── dev/
+│   ├── config.py       # config, constants, paths, env overrides
+│   ├── controller.py   # orchestrator: lifecycle, logging, shutdown
+│   ├── engine.py       # llama-server process + health monitor + restart
+│   ├── proxy.py        # serves the UI, forwards API, streaming, telemetry
+│   └── system.py       # hardware analysis (RAM/CPU tiers)
+├── engine/             # llama-server binary (downloaded, not in git)
+├── models/             # your .gguf model (not in git)
+├── ui/                 # browser chat UI (index.html, app.js, styles.css)
+├── config.json         # port, model name, debug
+├── run.bat             # Windows launcher
+└── kill.bat            # force-clean processes and locks
+```
+
+- **Controller** starts the proxy, boots the engine, tracks lifecycle phases, performs graceful shutdown
+- **Proxy** serves `ui/` and forwards `/v1/chat/completions` to the engine with request IDs, queue control, and SSE streaming
+- **Engine manager** validates the binary, waits for readiness, monitors health every 5s, auto-restarts up to 3 times
+- Ports: UI `8081`, engine `8082` (from `config.json` or `CODAI_PORT`)
+
+## ⚙️ Configuration
+
+```json
+{
+  "port": 8081,
+  "model_name": "gemma-3-1b-it-Q4_K_M.gguf",
+  "ctx": 2048,
+  "threads": 4,
+  "host": "127.0.0.1",
+  "debug": false,
+  "log_level": "INFO"
+}
+```
+
+Environment overrides: `CODAI_PORT`, `CODAI_MODEL`, `CODAI_CTX`, `CODAI_THREADS`, `CODAI_HOST`, `CODAI_DEBUG`, `CODAI_LOG_LEVEL`. Priority: environment > config.json > hardware-derived defaults.
+
+Logs land in `logs/codai.log`, `logs/engine.log`, `logs/crash.log`. Debug mode (`"debug": true`) also exposes `/logs` and the `/telemetry` page.
 
 ## 🛠️ Technical Specifications
 
-### System Requirements
-- **OS**: Windows 10/11 (64-bit)
+- **OS**: Windows 10/11 (64-bit) for the packaged release; Linux/macOS from source
 - **RAM**: 4GB minimum, 8GB recommended
-- **Storage**: 2GB free space + 2-5GB for one AI model
-- **Python**: 3.11 recommended (3.12/3.13 work but build llama-cpp-python from source, needing CMake + a C/C++ compiler)
-- **Linux users**: install the GUI toolkit before running — `sudo apt install python3-tk` (it is a system package; pip cannot provide it. macOS with Homebrew: `brew install python-tk@3.12`)
-
-### Architecture
-- **Frontend**: CustomTkinter (Modern UI)
-- **Backend**: FastAPI (High Performance)
-- **AI Engine**: Llama.cpp (Offline LLM)
-- **Build System**: PyInstaller (Portable Executable)
+- **Storage**: ~1GB for the app + 0.5–5GB for one model
+- **Runtime**: Python 3.10+ with `psutil` (source mode only), llama.cpp `llama-server` engine
+- **UI**: your browser — no GUI toolkit, no Electron, no internet
 
 ### Key Technologies
-- **Single Instance Protection**: Windows Mutex + port check (8765)
-- **Memory Management**: Optimized for low-resource environments
-- **Error Handling**: Comprehensive crash prevention
-- **Chat Export**: Save conversations as JSON
-- **Optional GPU Acceleration**: CUDA build via `INSTALL_GPU_SUPPORT.bat` + `CODAIPRO_GPU_LAYERS` env var (2-5x faster responses)
-
----
-
-## 🎓 Perfect for Educational Environments
-
-### Why Students Love CodaiPro
-
-> *"Finally, an AI coding assistant that works in our university labs without internet!"*
-> 
-> *"Saved me hours during my final project. The code explanations are incredibly helpful."*
-> 
-> *"Perfect for coding competitions - fast, reliable, and always available."*
-
-### Lab Administrator Benefits
-- **No Network Requirements** - Reduces IT complexity
-- **Portable Installation** - No admin rights needed
-- **Resource Efficient** - Won't slow down lab computers
-- **Single Instance** - Prevents system conflicts
-
----
-
-## 🔧 Advanced Features
-
-### 🤖 AI Capabilities
-- **Code Generation**: Write functions, classes, and complete programs
-- **Code Explanation**: Understand complex algorithms step-by-step
-- **Bug Detection**: Identify and fix errors automatically
-- **Code Optimization**: Improve performance and readability
-- **Multi-Language**: Support for 20+ programming languages
-
-### ⚙️ Customization Options
-- **Temperature Control**: Adjust AI creativity vs accuracy
-- **Response Length**: Configure detailed vs concise answers
-- **Theme Options**: Dark/Light mode support
-- **Keyboard Shortcuts**: Productivity-focused hotkeys
-
-### 🔒 Security & Privacy
-- **100% Offline**: Your code never leaves your machine
-- **No Telemetry**: Zero data collection
-- **Open Source**: Fully auditable codebase
-- **Secure**: No external API calls or data transmission
+- **Streaming chat** over SSE with stop support
+- **Engine health monitor** with staged auto-restart (0s / 2s / 5s backoff)
+- **Hardware-aware tuning** — context and threads scale to the machine
+- **Single instance** — PID lock with stale-lock recovery
+- **Rotating logs + crash reports** in `logs/`
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions from the community! Here's how you can help:
-
-### 🐛 Bug Reports
-Found a bug? Please [open an issue](https://github.com/Luckyyaduvanshiofficial/Codai/issues) with:
-- Detailed description
-- Steps to reproduce
-- System information
-- Screenshots (if applicable)
-
-### 💡 Feature Requests
-Have an idea? [Create a feature request](https://github.com/Luckyyaduvanshiofficial/Codai/issues) with:
-- Clear description of the feature
-- Use case and benefits
-- Implementation suggestions
-
-### 🔧 Code Contributions
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
-
----
+See [CONTRIBUTING.md](CONTRIBUTING.md) and the developer deep-dive in [docs/contributor-project-info.md](docs/contributor-project-info.md). Bug reports and model-compatibility reports are very welcome via [issues](https://github.com/Luckyyaduvanshiofficial/Codai/issues).
 
 ## 👨‍💻 About the Developer
 
@@ -260,72 +162,30 @@ Have an idea? [Create a feature request](https://github.com/Luckyyaduvanshioffic
 **Full-Stack Developer & DevOps Enthusiast**
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-🌐-blue?style=for-the-badge)](https://luckyyaduvanshiofficial.github.io)
-[![GitHub](https://img.shields.io/badge/GitHub-💻-black?style=for-the-badge)](https://github.com/luckyyaduvanshi)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-💼-blue?style=for-the-badge)](https://linkedin.com/in/luckyyaduvanshi)
+[![GitHub](https://img.shields.io/badge/GitHub-💻-black?style=for-the-badge)](https://github.com/Luckyyaduvanshiofficial)
 
 *"Building tools that make coding accessible to everyone, everywhere."*
 
 </div>
 
-### My Journey
-- 🎓 **Computer Science Student** passionate about AI and education
-- 💻 **Open Source Advocate** contributing to developer tools
-- 🚀 **DevOps Learner** implementing modern deployment practices
-- 🎯 **Mission**: Making AI-powered coding assistance available offline for students worldwide
-
 ### Why I Built CodaiPro
-As a student, I experienced firsthand the frustration of lab environments without internet access. During crucial exams and projects, when you need coding assistance the most, traditional AI tools are unavailable. CodaiPro solves this problem by bringing powerful AI assistance directly to your machine, no internet required.
-
----
-
-## 📊 Project Stats
-
-<div align="center">
-
-![GitHub stars](https://img.shields.io/github/stars/luckyyaduvanshi/codaipro?style=social)
-![GitHub forks](https://img.shields.io/github/forks/luckyyaduvanshi/codaipro?style=social)
-![GitHub issues](https://img.shields.io/github/issues/luckyyaduvanshi/codaipro)
-![GitHub license](https://img.shields.io/github/license/luckyyaduvanshi/codaipro)
-
-</div>
-
----
+As a student, I experienced firsthand the frustration of lab environments without internet access. During crucial exams and projects, when you need coding assistance the most, traditional AI tools are unavailable. CodaiPro solves this by bringing powerful AI assistance directly to your machine — no internet required.
 
 ## 📄 License
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-### What this means:
-- ✅ **Commercial Use** - Use in commercial projects
-- ✅ **Modification** - Modify and distribute
-- ✅ **Distribution** - Share with others
-- ✅ **Private Use** - Use for personal projects
-- ❌ **Liability** - No warranty provided
-- ❌ **Trademark Use** - Cannot use project trademarks
-
----
+Licensed under the **MIT License** — see the [LICENSE](LICENSE) file.
 
 ## 🙏 Acknowledgments
 
-- **Llama.cpp Team** - For the amazing offline LLM engine
-- **CustomTkinter** - For the beautiful modern UI framework
-- **FastAPI** - For the high-performance backend framework
-- **PyInstaller** - For making portable executables possible
-- **Open Source Community** - For inspiration and support
-
----
+- **llama.cpp team** — for the incredible `llama-server` engine
+- **bartowski & model publishers** — for the quantized GGUF models
+- **Open Source Community** — for inspiration and support
 
 ## 📞 Support & Contact
 
-### 🆘 Need Help?
-- 📖 **Documentation**: [GitHub Wiki](https://github.com/Luckyyaduvanshiofficial/Codai/wiki)
 - 🐛 **Bug Reports**: [GitHub Issues](https://github.com/Luckyyaduvanshiofficial/Codai/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/Luckyyaduvanshiofficial/Codai/discussions)
-
-### 🌐 Connect With Me
-- **Portfolio**: [luckyyaduvanshiofficial.github.io](https://luckyyaduvanshiofficial.github.io)
-- **Email**: [Contact through portfolio](https://luckyyaduvanshiofficial.github.io)
-- **GitHub**: [@luckyyaduvanshi](https://github.com/luckyyaduvanshi)
+- 🌐 **Portfolio**: [luckyyaduvanshiofficial.github.io](https://luckyyaduvanshiofficial.github.io)
 
 ---
 
@@ -334,7 +194,5 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 ### 🌟 Star this repository if CodaiPro helped you!
 
 **Made with ❤️ for the coding community**
-
-*Empowering students and developers with offline AI assistance*
 
 </div>

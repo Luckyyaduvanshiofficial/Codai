@@ -22,7 +22,7 @@
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
       "name": "CodaiPro",
-      "softwareVersion": "2.1",
+      "softwareVersion": "3.0",
       "operatingSystem": "Windows 10, Windows 11",
       "applicationCategory": "DeveloperApplication",
       "description": "Offline AI coding assistant that runs local GGUF models via llama.cpp on Windows. No internet, no accounts, no API keys.",
@@ -64,7 +64,7 @@
     <main id="top">
         <section class="hero wrap">
             <div class="hero-copy">
-                <p class="kicker">Free and open source · v2.1</p>
+                <p class="kicker">Free and open source · v3.0</p>
                 <h1>The AI coding assistant that works when the Wi-Fi doesn&rsquo;t.</h1>
                 <p class="lede">CodaiPro runs a real language model on your own machine. No internet, no accounts, no API keys. Made for lab exams, coding competitions, and any room where the network is off limits.</p>
                 <div class="cta-row">
@@ -160,14 +160,14 @@
                 <article class="option option-primary">
                     <p class="stamp">Recommended</p>
                     <h3>Portable executable</h3>
-                    <p>Unzip, double-click, done. Nothing to install, nothing to configure.</p>
+                    <p>Unzip, drop in a model, double-click run.bat — the browser opens with a streaming chat.</p>
                     <ul class="ticks">
-                        <li>Runs straight from a USB stick</li>
-                        <li>No admin rights needed</li>
-                        <li>Single-instance guard keeps lab machines clean</li>
+                        <li>Official llama-server engine included</li>
+                        <li>Runs straight from a USB stick, no admin rights</li>
+                        <li>Engine auto-restarts if it ever crashes</li>
                     </ul>
                     <a class="btn btn-primary" href="https://github.com/Luckyyaduvanshiofficial/Codai/releases/latest" target="_blank" rel="noopener">Download portable (Windows)</a>
-                    <p class="meta">~500 MB · Windows 10/11 · model downloaded separately</p>
+                    <p class="meta">Windows 10/11 · engine included · model downloaded separately</p>
                 </article>
 
                 <article class="option">
@@ -175,20 +175,25 @@
                     <p>For developers who want to read it, change it, or ship something back.</p>
                     <ul class="ticks">
                         <li>Full source code, MIT licensed</li>
-                        <li>Plain Python — no build step to run it</li>
+                        <li>One Python dependency: psutil</li>
                         <li>Pull requests welcome</li>
                     </ul>
                     <a class="btn" href="https://github.com/Luckyyaduvanshiofficial/Codai" target="_blank" rel="noopener">Clone the repository</a>
-                    <p class="meta">Requires Python 3.11 · 3.12/3.13 need C/C++ build tools</p>
+                    <p class="meta">Python 3.10+ · llama-server binary placed in engine/</p>
                 </article>
             </div>
 
             <aside class="models">
                 <h3>Bring a model</h3>
-                <p>The download ships without a model on purpose — you pick the brain. Drop one .gguf file into the <code>models</code> folder and CodaiPro finds it on its own.</p>
+                <p>The download ships without a model on purpose — you pick the brain. Drop one .gguf file into the <code>models</code> folder; Codai Pro expects <code>gemma-3-1b-it-Q4_K_M.gguf</code> by default (using another file? set <code>model_name</code> in config.json).</p>
 
                 <h4>For weak lab PCs — under 1 GB, runs on almost anything</h4>
                 <ul class="tiny-models">
+                    <li>
+                        <span class="tm-name">Gemma 3 1B Instruct <em class="tm-tag">Default</em></span>
+                        <span class="tm-size">0.81 GB</span>
+                        <span class="tm-links"><a href="https://huggingface.co/bartowski/google_gemma-3-1b-it-GGUF/resolve/main/google_gemma-3-1b-it-Q4_K_M.gguf">Download Q4_K_M</a><a href="https://huggingface.co/bartowski/google_gemma-3-1b-it-GGUF" target="_blank" rel="noopener">Model page ↗</a></span>
+                    </li>
                     <li>
                         <span class="tm-name">Qwen3.5-0.8B <em class="tm-tag">Newest</em></span>
                         <span class="tm-size">0.58 GB</span>
@@ -198,11 +203,6 @@
                         <span class="tm-name">Qwen3-0.6B</span>
                         <span class="tm-size">0.48 GB</span>
                         <span class="tm-links"><a href="https://huggingface.co/bartowski/Qwen_Qwen3-0.6B-GGUF/resolve/main/Qwen_Qwen3-0.6B-Q4_K_M.gguf">Download Q4_K_M</a><a href="https://huggingface.co/bartowski/Qwen_Qwen3-0.6B-GGUF" target="_blank" rel="noopener">Model page ↗</a></span>
-                    </li>
-                    <li>
-                        <span class="tm-name">Gemma 3 1B Instruct</span>
-                        <span class="tm-size">0.81 GB</span>
-                        <span class="tm-links"><a href="https://huggingface.co/bartowski/google_gemma-3-1b-it-GGUF/resolve/main/google_gemma-3-1b-it-Q4_K_M.gguf">Download Q4_K_M</a><a href="https://huggingface.co/bartowski/google_gemma-3-1b-it-GGUF" target="_blank" rel="noopener">Model page ↗</a></span>
                     </li>
                     <li>
                         <span class="tm-name">Llama 3.2 1B Instruct</span>

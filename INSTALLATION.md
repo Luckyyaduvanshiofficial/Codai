@@ -1,240 +1,112 @@
-# 📦 CodaiPro Installation Guide
+# 📦 Installing CodaiPro v3.0
 
-## 🎯 Choose Your Installation Method
+## Option 1: Portable Executable (Recommended)
 
-### 🚀 Option 1: Portable Executable (Recommended for Students)
-
-**Perfect for lab environments, exams, and quick setup**
-
-#### Step 1: Download
-1. Go to [Releases Page](https://github.com/luckyyaduvanshi/codaipro/releases)
-2. Download `CodaiPro-v2.1-Portable-Windows.zip`
-3. File size: ~500MB (includes all dependencies)
-
-#### Step 2: Extract & Run
-```bash
-# Extract the ZIP file
-Right-click → Extract All → Choose location
-
-# Navigate to extracted folder
-cd CodaiPro_v21/
-
-# Run the application
-Double-click CodaiPro_v21.exe
+```text
+1. Download CodaiPro-v3.0-Portable-Windows.zip from the releases page:
+   https://github.com/Luckyyaduvanshiofficial/Codai/releases/latest
+2. Right-click → Extract All to a WRITABLE folder (e.g., D:\CodaiPro or a USB drive)
+   Do NOT extract into C:\Program Files - the app writes logs and reads models from its folder.
+3. Download ONE model into the models/ folder (see below)
+4. Double-click run.bat
+5. Wait for [READY] - the browser opens http://127.0.0.1:8081/
 ```
 
-#### ✅ Advantages
-- No installation required
-- Works on restricted lab computers
-- Portable - run from USB drive
-- No admin rights needed
-- 100% offline ready
+The zip ships with `Codai.exe` and the official `engine\llama-server.exe` already inside. You only add a model.
 
----
+## Option 2: From Source
 
-### 🐍 Option 2: Python Installation (For Developers)
-
-**Best for customization and development**
-
-#### Prerequisites
-- Python 3.11 or higher
-- pip package manager
-- Git (optional)
-
-#### Step 1: Clone Repository
 ```bash
-# Using Git
-git clone https://github.com/luckyyaduvanshi/codaipro.git
-cd codaipro
+git clone https://github.com/Luckyyaduvanshiofficial/Codai.git
+cd Codai
+pip install -r requirements.txt   # installs psutil
 
-# Or download ZIP from GitHub
-# Extract and navigate to folder
-```
+# Get the engine binary into engine/ (see "Engine Setup" below)
+# Get a model into models/ (see "Model Setup" below)
 
-#### Step 2: Install Dependencies
-```bash
-# Create virtual environment (recommended)
-python -m venv venv
-venv\Scripts\activate  # Windows
-# source venv/bin/activate  # Linux/Mac
-
-# Install requirements
-pip install -r requirements.txt
-```
-
-#### Step 3: Run Application
-```bash
-python launcher.py
-```
-
-#### ✅ Advantages
-- Full source code access
-- Easy customization
-- Latest development features
-- Contribute to project
-
----
-
-### 🔧 Option 3: Build from Source
-
-**For advanced users who want to create their own executable**
-
-#### Prerequisites
-- Python 3.11+
-- PyInstaller
-- All dependencies from requirements.txt
-
-#### Step 1: Setup Environment
-```bash
-git clone https://github.com/luckyyaduvanshi/codaipro.git
-cd codaipro
-pip install -r requirements.txt
-pip install pyinstaller
-```
-
-#### Step 2: Build Executable
-```bash
-# Windows
-BUILD_V21.bat
-
-# Manual build (all platforms)
-python -m PyInstaller --onedir --windowed --name "CodaiPro_v21" launcher.py
-```
-
-#### Step 3: Find Your Executable
-```bash
-# Built executable location
-dist_portable/CodaiPro_v21/CodaiPro_v21.exe
+# Windows: double-click run.bat
+# Linux / macOS:
+python dev/controller.py
 ```
 
 ---
 
-## 🎓 Lab Environment Setup
+## Engine Setup (source installs only; the release zip includes it)
 
-### For Students
-1. **Download portable version** to USB drive
-2. **Plug into lab computer**
-3. **Run directly** - no installation needed
-4. **Start coding** with AI assistance!
+The engine is the official [llama.cpp](https://github.com/ggml-org/llama.cpp) `llama-server` binary.
 
-### For Lab Administrators
-1. **Download once** and deploy to all machines
-2. **No network configuration** required
-3. **No admin rights** needed for users
-4. **Resource efficient** - won't slow down systems
+**Windows**
+```bash
+# Easiest:
+winget install llama.cpp
+# then copy llama-server.exe from the install location into engine\
+
+# Or download directly:
+# https://github.com/ggml-org/llama.cpp/releases → llama-bXXXX-bin-win-cpu-x64.zip
+# Extract everything into engine\
+```
+
+**Linux**
+```bash
+# Download llama-bXXXX-bin-ubuntu-x64.tar.gz from llama.cpp releases,
+# extract, and copy llama-server + the .so files into engine/
+chmod +x engine/llama-server
+```
+
+**macOS**
+```bash
+brew install llama.cpp
+# then link the binary:
+ln -s $(brew --prefix)/bin/llama-server engine/llama-server
+```
+
+**GPU (optional)**: download a CUDA build instead (`llama-bXXXX-bin-win-cuda-12.4-x64.zip` + the cudart zip from the same release) and extract both into `engine\`. The controller passes no GPU flags by default — edit `dev/engine.py` boot arguments (`-ngl 99`) to offload layers.
 
 ---
 
-## 🔧 Troubleshooting
+## Model Setup
 
-### Common Issues
+Drop ONE `.gguf` file into the `models/` folder. Default expected by `config.json`: `gemma-3-1b-it-Q4_K_M.gguf` (0.81 GB) — https://huggingface.co/bartowski/google_gemma-3-1b-it-GGUF
 
-#### "Multiple instances opening"
-```bash
-# Solution 1: Kill all instances
-KILL_V21.bat
+Other verified picks (all direct links on the [website model guide](https://luckyyaduvanshiofficial.github.io/Codai/#download)):
+- Qwen3.5-0.8B (0.58 GB, newest)
+- Qwen3-0.6B (0.48 GB)
+- Llama 3.2 1B Instruct (0.81 GB)
+- Phi-3.5-mini (2.3 GB), Qwen2.5-Coder-3B (2 GB), Qwen2.5-Coder-7B (4.7 GB)
 
-# Solution 2: Restart and try again
-# Close all CodaiPro windows and restart
-```
-
-#### "Application won't start"
-```bash
-# Check system requirements
-- Windows 10/11 (64-bit)
-- 4GB RAM minimum
-- 2GB free space
-
-# Try running as administrator (if needed)
-Right-click CodaiPro_v21.exe → Run as administrator
-```
-
-#### "Missing dependencies" (Python installation)
-```bash
-# Reinstall requirements (single source of truth)
-pip install --force-reinstall -r requirements.txt
-```
-
-#### "No module named 'tkinter'" (Linux/macOS)
-```bash
-# tkinter is a system package — pip cannot install it.
-# Ubuntu/Debian:
-sudo apt install python3-tk
-
-# macOS with Homebrew Python:
-brew install python-tk@3.12
-
-# Then run the app again
-python launcher.py
-```
-
-#### "Port 8765 already in use"
-```bash
-# Kill processes using port 8765 (backend port)
-netstat -ano | findstr :8765
-taskkill /PID <process_id> /F
-
-# Or use the kill script
-KILL_V21.bat
-```
+Using a different filename? Set `"model_name"` in `config.json` or run `DOWNLOAD_MODEL.bat` for help.
 
 ---
 
-## 🚀 First Run Guide
+## 🚀 First Run
 
-### What to Expect
-1. **Startup Screen** - Application initializes (5-10 seconds)
-2. **Backend Loading** - AI engine starts up
-3. **Main Interface** - Ready to use!
-
-### Initial Setup
-1. **Adjust Settings** - Temperature, response length
-2. **Test AI Chat** - Ask a simple coding question
-3. **Explore Features** - Code generation, explanation, debugging
-
-### Tips for Best Performance
-- **Close other applications** to free up RAM
-- **Use SSD storage** for faster loading
-- **Keep application updated** for latest features
+1. `run.bat` shows a startup summary and preflight checks
+2. Wait for `[READY]` — this means the engine loaded your model
+3. The browser opens `http://127.0.0.1:8081/` automatically
+4. Chat! Answers stream in token by token
+5. Press any key in the launcher window to stop Codai safely
 
 ---
 
-## 📊 System Requirements
+## 🆘 Troubleshooting
 
-### Minimum Requirements
-| Component | Requirement |
-|-----------|-------------|
-| **OS** | Windows 10 (64-bit) |
-| **RAM** | 4GB |
-| **Storage** | 2GB free space |
-| **CPU** | Dual-core 2.0GHz |
+### "Missing engine binary: engine\llama-server.exe"
+The engine was not found. Re-download the release zip (it includes the engine) or follow Engine Setup above.
 
-### Recommended Requirements
-| Component | Requirement |
-|-----------|-------------|
-| **OS** | Windows 11 (64-bit) |
-| **RAM** | 8GB or more |
-| **Storage** | 4GB free space (SSD) |
-| **CPU** | Quad-core 2.5GHz+ |
+### "Missing model file: models\..."
+Download a model (see Model Setup) or fix `"model_name"` in `config.json`.
 
----
+### "Port 8081/8082 is already in use"
+Another app (or an old Codai instance) holds the port. Run `kill.bat`, or change `"port"` in `config.json`.
 
-## 🆘 Getting Help
+### "Another Codai instance is already running"
+Close the other instance. If it crashed earlier, `kill.bat` (Windows) removes the stale `logs\codai.lock`.
 
-### Documentation
-- **README**: [Main documentation](README.md)
-- **Wiki**: [Detailed guides](https://github.com/luckyyaduvanshi/codaipro/wiki)
-- **FAQ**: [Common questions](https://github.com/luckyyaduvanshi/codaipro/wiki/FAQ)
+### Engine keeps crashing
+Check `logs\engine.log` for the native error and `logs\crash.log` for Python traces. Common causes: not enough RAM for the model (pick a smaller one), or a corrupted download (re-download the model).
 
-### Support Channels
-- **Issues**: [Report bugs](https://github.com/luckyyaduvanshi/codaipro/issues)
-- **Discussions**: [Ask questions](https://github.com/luckyyaduvanshi/codaipro/discussions)
-- **Email**: [Contact developer](https://luckyyaduvanshiofficial.github.io)
+### Chat replies are slow
+That is normal on CPU for bigger models — try Qwen3.5-0.8B or Gemma 3 1B, and close heavy apps. The controller already tunes threads/context to your hardware.
 
----
-
-## 🎉 You're Ready!
-
-Congratulations! You now have CodaiPro installed and ready to use. Start by asking the AI assistant to help you with your coding projects!
-
-**Happy Coding! 🚀**
+### UI loads but chat fails
+Check the health endpoint `http://127.0.0.1:8081/health` — `engine` should say `running`. If not, look at `logs\engine.log`.
