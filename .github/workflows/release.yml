@@ -7,9 +7,12 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version to release (e.g., v2.1.0)'
+        description: 'Version to release (e.g., v2.1.1)'
         required: true
-        default: 'v2.1.0'
+        default: 'v2.1.1'
+
+env:
+  VERSION: ${{ github.event.inputs.version || github.ref_name }}
 
 jobs:
   build-windows:
@@ -44,13 +47,13 @@ jobs:
 
     - name: Create ZIP archive
       run: |
-        powershell Compress-Archive -Path "portable\*" -DestinationPath "CodaiPro-v2.1-Portable-Windows.zip"
+        powershell Compress-Archive -Path "portable\*" -DestinationPath "CodaiPro-${{ env.VERSION }}-Portable-Windows.zip"
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: CodaiPro-Windows-Portable
-        path: CodaiPro-v2.1-Portable-Windows.zip
+        path: CodaiPro-${{ env.VERSION }}-Portable-Windows.zip
 
   create-release:
     needs: build-windows
@@ -70,43 +73,37 @@ jobs:
     - name: Create Release
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: ${{ github.event.inputs.version || github.ref_name }}
-        name: CodaiPro ${{ github.event.inputs.version || github.ref_name }}
+        tag_name: ${{ env.VERSION }}
+        name: CodaiPro ${{ env.VERSION }}
         body: |
-          ## 🚀 CodaiPro ${{ github.event.inputs.version || github.ref_name }} - Enhanced Stability
+          ## CodaiPro ${{ env.VERSION }}
 
-          ### ✨ What's New
-          - Enhanced single instance protection (4-layer system)
-          - Improved stability and crash prevention
-          - Better memory management for lab environments
-          - Clean exit strategies preventing background processes
+          Maintenance release: everything that broke while the project slept has been repaired. Same product, working installs, smarter AI output.
 
-          ### 📥 Download Options
-          - **Portable Windows**: Perfect for lab environments, no installation required
-          - **Source Code**: For developers who want to build from source
+          ### Fixed
+          - Fresh installs work again: `fastapi`, `uvicorn`, `requests` and `pydantic` are now declared (they were imported but never listed)
+          - AI engine upgraded to llama-cpp-python 0.3.x; removed the deprecated `f16_kv` and FastAPI `on_event` usage
+          - Every model now receives its own chat template — Phi-3.5 and Qwen2.5-Coder answers are no longer degraded by a hardcoded Phi-3 prompt
+          - Single-instance guard now watches the real backend port (8765, was 8000) and lockfiles are cleaned on exit
+          - The GUI no longer spawns a second backend alongside the launcher's
+          - Generation timeout raised to 300 s so slow lab machines stop showing fake errors
+          - GPU option actually works: CUDA build flag fixed, `CODAIPRO_GPU_LAYERS=99` offloads layers
+          - Website redesigned and live at https://luckyyaduvanshiofficial.github.io/Codai/ — with a real poll and live star count
 
-          ### 🎓 Perfect for Students
-          - ✅ Works 100% offline
-          - ✅ No internet connection required
-          - ✅ Portable - run from USB drive
-          - ✅ Lab-friendly and exam-ready
+          ### Download options
+          - **Portable Windows**: unzip, run `CodaiPro_v21.exe`, no installation — perfect for lab environments and USB sticks
+          - **Source code**: clone and `pip install -r requirements.txt`
 
-          ### 🚀 Quick Start
-          1. Download the portable version below
-          2. Extract to your desired location
-          3. Run `CodaiPro_v21.exe`
-          4. Start coding with AI assistance!
+          ### First run
+          1. Download a model (Phi-3.5-mini 2.3 GB, Qwen2.5-Coder-3B 2 GB, or Qwen2.5-Coder-7B 4.7 GB) into the `models` folder — links in the [model guide](https://luckyyaduvanshiofficial.github.io/Codai/#download)
+          2. Run `CodaiPro_v21.exe`
 
-          ### 🐛 Bug Fixes
-          - Fixed multiple instance opening issue
-          - Resolved application restart loops
-          - Improved process cleanup on exit
-          - Enhanced mutex protection system
-
-          ### 📊 System Requirements
+          ### System requirements
           - Windows 10/11 (64-bit)
-          - 4GB RAM minimum
-          - 2GB free storage space
+          - 4 GB RAM minimum
+          - 2 GB free storage + 2–5 GB for one model
+
+          **Full changelog**: https://github.com/Luckyyaduvanshiofficial/Codai/compare/git-tag-v2.1.0...${{ env.VERSION }}
         draft: false
         prerelease: false
-        files: CodaiPro-v2.1-Portable-Windows.zip
+        files: CodaiPro-${{ env.VERSION }}-Portable-Windows.zip
