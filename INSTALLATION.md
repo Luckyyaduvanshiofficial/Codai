@@ -155,6 +155,19 @@ Right-click CodaiPro_v21.exe → Run as administrator
 pip install --force-reinstall -r requirements.txt
 ```
 
+#### "No module named 'tkinter'" (Linux/macOS)
+```bash
+# tkinter is a system package — pip cannot install it.
+# Ubuntu/Debian:
+sudo apt install python3-tk
+
+# macOS with Homebrew Python:
+brew install python-tk@3.12
+
+# Then run the app again
+python launcher.py
+```
+
 #### "Port 8765 already in use"
 ```bash
 # Kill processes using port 8765 (backend port)

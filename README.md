@@ -168,6 +168,7 @@ The Qwen 3 family thinks before it answers; CodaiPro strips the scratchpad so yo
 - **RAM**: 4GB minimum, 8GB recommended
 - **Storage**: 2GB free space + 2-5GB for one AI model
 - **Python**: 3.11 recommended (3.12/3.13 work but build llama-cpp-python from source, needing CMake + a C/C++ compiler)
+- **Linux users**: install the GUI toolkit before running — `sudo apt install python3-tk` (it is a system package; pip cannot provide it. macOS with Homebrew: `brew install python-tk@3.12`)
 
 ### Architecture
 - **Frontend**: CustomTkinter (Modern UI)
