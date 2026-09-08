@@ -41,9 +41,12 @@ jobs:
         if (-not $asset) { throw "No Windows CPU engine asset found" }
         Write-Host "Downloading engine: $($asset.name)"
         Invoke-WebRequest $asset.browser_download_url -OutFile engine.zip
-        Expand-Archive engine.zip -DestinationPath engine
-        Remove-Item engine.zip
+        # Flatten: the llama.cpp zip nests files inside its own folder
+        Expand-Archive engine.zip -DestinationPath engine_tmp
+        Get-ChildItem engine_tmp -Recurse -File | ForEach-Object { Copy-Item $_.FullName engine/ }
+        Remove-Item engine_tmp, engine.zip
         Get-ChildItem engine | Select-Object -First 10
+        if (-not (Test-Path "engine/llama-server.exe")) { throw "llama-server.exe missing after extraction" }
 
     - name: Build Codai.exe
       run: |
