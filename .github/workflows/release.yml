@@ -42,6 +42,7 @@ jobs:
         Write-Host "Downloading engine: $($asset.name)"
         Invoke-WebRequest $asset.browser_download_url -OutFile engine.zip
         # Flatten: the llama.cpp zip nests files inside its own folder
+        New-Item -ItemType Directory -Force -Path engine | Out-Null
         Expand-Archive engine.zip -DestinationPath engine_tmp
         Get-ChildItem engine_tmp -Recurse -File | ForEach-Object { Copy-Item $_.FullName engine/ }
         Remove-Item engine_tmp, engine.zip
