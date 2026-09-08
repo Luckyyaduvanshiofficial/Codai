@@ -58,12 +58,15 @@ jobs:
       shell: pwsh
       run: |
         $dest = "portable\CodaiPro"
-        New-Item -ItemType Directory -Force -Path "$dest\engine", "$dest\models" | Out-Null
+        New-Item -ItemType Directory -Force -Path $dest, "$dest\engine", "$dest\models" | Out-Null
         Copy-Item "dist\Codai.exe" $dest
-        Copy-Item -Recurse -Force "dev" "$dest\dev"
-        Copy-Item -Recurse -Force "ui" "$dest\ui"
-        Copy-Item -Recurse -Force "engine" "$dest\engine"
+        # Copy folder CONTENTS into pre-created engine/ (Copy-Item nests
+        # when the destination folder already exists)
+        Copy-Item -Recurse -Force "engine\*" "$dest\engine\"
+        Copy-Item -Recurse -Force "dev" "$dest\"
+        Copy-Item -Recurse -Force "ui" "$dest\"
         Copy-Item "config.json", "run.bat", "kill.bat", "help.txt" $dest
+        if (-not (Test-Path "$dest\engine\llama-server.exe")) { throw "llama-server.exe did not land in portable engine/" }
         $modelReadme = @"
         Drop ONE .gguf model file in this folder, then double-click run.bat.
 
