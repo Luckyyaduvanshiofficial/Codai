@@ -3,15 +3,15 @@
 <div align="center">
 
 ![CodaiPro Logo](https://img.shields.io/badge/CodaiPro-v3.0-blue?style=for-the-badge&logo=python)
-[![Open Source](https://img.shields.io/badge/Open%20Source-❤️-red?style=for-the-badge)](https://github.com/Luckyyaduvanshiofficial/Codai)
-[![Offline Ready](https://img.shields.io/badge/Works%20Offline-✅-green?style=for-the-badge)](https://github.com/Luckyyaduvanshiofficial/Codai)
-[![Student Friendly](https://img.shields.io/badge/Perfect%20for%20Labs-🎓-orange?style=for-the-badge)](https://github.com/Luckyyaduvanshiofficial/Codai)
+[![Open Source](https://img.shields.io/badge/Open%20Source-❤️-red?style=for-the-badge)](https://github.com/Luckyyaduvanshiofficial/Codaipro)
+[![Offline Ready](https://img.shields.io/badge/Works%20Offline-✅-green?style=for-the-badge)](https://github.com/Luckyyaduvanshiofficial/Codaipro)
+[![Student Friendly](https://img.shields.io/badge/Perfect%20for%20Labs-🎓-orange?style=for-the-badge)](https://github.com/Luckyyaduvanshiofficial/Codaipro)
 
 **🌟 A private, offline AI coding assistant that runs the official llama.cpp engine and opens in your browser**
 
 *Built for lab exams, coding competitions, and any room where the network is off limits*
 
-[📥 Download Latest Release](https://github.com/Luckyyaduvanshiofficial/Codai/releases/latest) • [🌐 Website](https://luckyyaduvanshiofficial.github.io/Codai/) • [📖 Model Guide](https://luckyyaduvanshiofficial.github.io/Codai/#download)
+[📥 Download Latest Release](https://github.com/Luckyyaduvanshiofficial/Codaipro/releases/latest) • [🌐 Website](https://luckyyaduvanshiofficial.github.io/Codaipro/) • [📖 Model Guide](https://luckyyaduvanshiofficial.github.io/Codaipro/#download)
 
 </div>
 
@@ -47,7 +47,7 @@ The release zip includes `Codai.exe` and the official `engine\llama-server.exe` 
 ## 🐍 Run from Source (Windows / Linux / macOS)
 
 ```bash
-git clone https://github.com/Luckyyaduvanshiofficial/Codai.git
+git clone https://github.com/Luckyyaduvanshiofficial/Codaipro.git
 cd Codai
 
 pip install -r requirements.txt   # just psutil
@@ -152,7 +152,7 @@ Logs land in `logs/codai.log`, `logs/engine.log`, `logs/crash.log`. Debug mode (
 
 ## 🤝 Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) and the developer deep-dive in [docs/contributor-project-info.md](docs/contributor-project-info.md). Bug reports and model-compatibility reports are very welcome via [issues](https://github.com/Luckyyaduvanshiofficial/Codai/issues).
+See [CONTRIBUTING.md](CONTRIBUTING.md) and the developer deep-dive in [docs/contributor-project-info.md](docs/contributor-project-info.md). Bug reports and model-compatibility reports are very welcome via [issues](https://github.com/Luckyyaduvanshiofficial/Codaipro/issues).
 
 ## 👨‍💻 About the Developer
 
@@ -183,8 +183,8 @@ Licensed under the **MIT License** — see the [LICENSE](LICENSE) file.
 
 ## 📞 Support & Contact
 
-- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/Luckyyaduvanshiofficial/Codai/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/Luckyyaduvanshiofficial/Codai/discussions)
+- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/Luckyyaduvanshiofficial/Codaipro/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/Luckyyaduvanshiofficial/Codaipro/discussions)
 - 🌐 **Portfolio**: [luckyyaduvanshiofficial.github.io](https://luckyyaduvanshiofficial.github.io)
 
 ---

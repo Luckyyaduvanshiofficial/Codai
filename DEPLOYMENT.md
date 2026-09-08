@@ -19,7 +19,7 @@ The optional Windows installer (`installer.iss`, Inno Setup) is compiled locally
 
 Automated by `.github/workflows/website-pages.yml` on every push that touches `website/`. The site deploys to:
 
-https://luckyyaduvanshiofficial.github.io/Codai/
+https://luckyyaduvanshiofficial.github.io/Codaipro/
 
 The website is fully static with no build step — `website/` is the deploy artifact.
 

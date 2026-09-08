@@ -4,7 +4,7 @@
 
 ```text
 1. Download CodaiPro-v3.0-Portable-Windows.zip from the releases page:
-   https://github.com/Luckyyaduvanshiofficial/Codai/releases/latest
+   https://github.com/Luckyyaduvanshiofficial/Codaipro/releases/latest
 2. Right-click → Extract All to a WRITABLE folder (e.g., D:\CodaiPro or a USB drive)
    Do NOT extract into C:\Program Files - the app writes logs and reads models from its folder.
 3. Download ONE model into the models/ folder (see below)
@@ -17,7 +17,7 @@ The zip ships with `Codai.exe` and the official `engine\llama-server.exe` alread
 ## Option 2: From Source
 
 ```bash
-git clone https://github.com/Luckyyaduvanshiofficial/Codai.git
+git clone https://github.com/Luckyyaduvanshiofficial/Codaipro.git
 cd Codai
 pip install -r requirements.txt   # installs psutil
 
@@ -68,7 +68,7 @@ ln -s $(brew --prefix)/bin/llama-server engine/llama-server
 
 Drop ONE `.gguf` file into the `models/` folder. Default expected by `config.json`: `gemma-3-1b-it-Q4_K_M.gguf` (0.81 GB) — https://huggingface.co/bartowski/google_gemma-3-1b-it-GGUF
 
-Other verified picks (all direct links on the [website model guide](https://luckyyaduvanshiofficial.github.io/Codai/#download)):
+Other verified picks (all direct links on the [website model guide](https://luckyyaduvanshiofficial.github.io/Codaipro/#download)):
 - Qwen3.5-0.8B (0.58 GB, newest)
 - Qwen3-0.6B (0.48 GB)
 - Llama 3.2 1B Instruct (0.81 GB)

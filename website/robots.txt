@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://luckyyaduvanshiofficial.github.io/Codai/sitemap.xml
+Sitemap: https://luckyyaduvanshiofficial.github.io/Codaipro/sitemap.xml

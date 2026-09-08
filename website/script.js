@@ -7,7 +7,7 @@
 (function () {
     "use strict";
 
-    var REPO = "Luckyyaduvanshiofficial/Codai";
+    var REPO = "Luckyyaduvanshiofficial/Codaipro";
     var CACHE_MS = 10 * 60 * 1000; // be kind to the unauthenticated rate limit
 
     document.documentElement.classList.add("js");
@@ -90,59 +90,46 @@
     }
 
     /* ----------------------------------------------------------------------
-       Poll — votes are "[Poll] <Option>" issues in REPO
+       Poll — votes stored locally as JSON in this browser (localStorage)
        ---------------------------------------------------------------------- */
 
     var POLL_OPTIONS = [
-        { label: "Phi-3.5-mini" },
+        { label: "Gemma 3 1B" },
+        { label: "Qwen3.5-0.8B" },
         { label: "Qwen2.5-Coder-3B" },
         { label: "Qwen2.5-Coder-7B" },
-        { label: "Still deciding" }
+        { label: "Something else" }
     ];
-    var POLL_MARKER = "[Poll]";
-    var VOTE_KEY = "codaipro-vote";       // this browser's choice
-    var RESULTS_KEY = "codaipro-poll-results";
+    var POLL_KEY = "codaipro-poll"; // { votes: {label: n}, mine: label }
 
     var resultsBox = document.getElementById("poll-results");
     var totalEl = document.getElementById("poll-total");
     var rowsEl = document.getElementById("poll-rows");
-    var optionLinks = document.querySelectorAll(".poll-option");
+    var optionButtons = document.querySelectorAll(".poll-option");
 
-    var myVote = null;
-    try { myVote = LS.getItem(VOTE_KEY); } catch (e) { /* ignore */ }
-
-    // Mark the remembered choice
-    optionLinks.forEach(function (link) {
-        if (link.getAttribute("data-poll-label") === myVote) {
-            link.classList.add("is-voted");
-        }
-        link.addEventListener("click", function () {
-            try { LS.setItem(VOTE_KEY, link.getAttribute("data-poll-label")); } catch (e) { /* ignore */ }
-        });
-    });
-
-    if (!resultsBox || !totalEl || !rowsEl) return;
-
-    function countFromTitle(title) {
-        var t = (title || "").trim();
-        if (t.indexOf(POLL_MARKER) !== 0) return null;
-        var label = t.slice(POLL_MARKER.length).trim();
-        for (var i = 0; i < POLL_OPTIONS.length; i++) {
-            if (POLL_OPTIONS[i].label === label) return POLL_OPTIONS[i].label;
-        }
-        return null;
+    function pollLoad() {
+        var state = cacheGet(POLL_KEY);
+        if (!state || typeof state !== "object") state = {};
+        if (typeof state.votes !== "object" || state.votes === null) state.votes = {};
+        return state;
     }
 
-    function renderResults(counts, total, cached) {
+    function renderPoll(state) {
+        var total = 0;
+        POLL_OPTIONS.forEach(function (opt) {
+            total += state.votes[opt.label] || 0;
+        });
+
         resultsBox.hidden = false;
         totalEl.textContent =
             total === 0
-                ? "No votes yet — be the first." + (cached ? " (showing cached tally)" : "")
-                : total + (total === 1 ? " vote" : " votes") + " counted" + (cached ? " (cached)" : "");
+                ? "No votes yet from this browser — yours will be the first."
+                : "Your local tally: " + total + (total === 1 ? " vote" : " votes") +
+                  " from this browser" + (state.mine ? " · your pick: " + state.mine : "");
 
         rowsEl.innerHTML = "";
         POLL_OPTIONS.forEach(function (opt) {
-            var count = counts[opt.label] || 0;
+            var count = state.votes[opt.label] || 0;
             var pct = total > 0 ? Math.round((count / total) * 100) : 0;
 
             var li = document.createElement("li");
@@ -151,10 +138,10 @@
             var label = document.createElement("span");
             label.className = "poll-label";
             label.textContent = opt.label;
-            if (opt.label === myVote) {
+            if (opt.label === state.mine) {
                 var yours = document.createElement("span");
                 yours.className = "yours";
-                yours.textContent = " — your vote";
+                yours.textContent = " — your pick";
                 label.appendChild(yours);
             }
 
@@ -182,48 +169,40 @@
         });
     }
 
-    function showUnavailable() {
-        resultsBox.hidden = false;
-        var cached = cacheGet(RESULTS_KEY);
-        if (cached && cached.counts) {
-            renderResults(cached.counts, cached.total, true);
-            return;
+    var pollState = pollLoad();
+
+    // Mark the remembered choice
+    optionButtons.forEach(function (btn) {
+        if (btn.getAttribute("data-poll-label") === pollState.mine) {
+            btn.classList.add("is-voted");
         }
-        resultsBox.innerHTML =
-            '<p class="poll-unavailable">Live tally is unavailable right now ' +
-            "(GitHub API rate limit or offline). Your vote button still works — " +
-            'results will appear on your next visit.</p>';
+    });
+
+    if (pollState.mine) {
+        renderPoll(pollState);
     }
 
-    var resultsCache = cacheGet(RESULTS_KEY);
+    optionButtons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            var label = btn.getAttribute("data-poll-label");
+            var state = pollLoad();
+            if (state.mine === label) return; // same pick, nothing to move
 
-    if (resultsCache && Date.now() - resultsCache.t < CACHE_MS) {
-        renderResults(resultsCache.counts, resultsCache.total, true);
-    } else {
-        fetch("https://api.github.com/repos/" + REPO + "/issues?per_page=100&state=all&sort=created&direction=desc")
-            .then(function (r) {
-                if (!r.ok) throw new Error("github api " + r.status);
-                return r.json();
-            })
-            .then(function (issues) {
-                if (!Array.isArray(issues)) throw new Error("unexpected response");
+            // Moving the vote: take one back from the old choice
+            if (state.mine && state.votes[state.mine]) {
+                state.votes[state.mine] -= 1;
+                if (state.votes[state.mine] <= 0) delete state.votes[state.mine];
+            }
+            state.votes[label] = (state.votes[label] || 0) + 1;
+            state.mine = label;
+            pollSave(state);
 
-                var counts = {};
-                var total = 0;
-                issues.forEach(function (issue) {
-                    // issues list includes pull requests; they are not votes
-                    if (issue.pull_request) return;
-                    var label = countFromTitle(issue.title);
-                    if (!label) return;
-                    counts[label] = (counts[label] || 0) + 1;
-                    total += 1;
-                });
-
-                cacheSet(RESULTS_KEY, { t: Date.now(), counts: counts, total: total });
-                renderResults(counts, total, false);
-            })
-            .catch(showUnavailable);
-    }
+            optionButtons.forEach(function (b) {
+                b.classList.toggle("is-voted", b.getAttribute("data-poll-label") === label);
+            });
+            renderPoll(state);
+        });
+    });
 
     /* ----------------------------------------------------------------------
        Reveal on scroll

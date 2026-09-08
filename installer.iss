@@ -16,7 +16,7 @@
 #define MyAppName "Codai Pro"
 #define MyAppVersion "1.0.0"
 #define MyAppPublisher "Codai"
-#define MyAppURL "https://github.com/Luckyyaduvanshiofficial/Codai"
+#define MyAppURL "https://github.com/Luckyyaduvanshiofficial/Codaipro"
 #define MyAppExeName "run.bat"
 #define MyAppIcon "docs\image\codai.ico"
 #define BundledModel AddBackslash(SourcePath) + "models\\gemma-3-1b-it-Q4_K_M.gguf"

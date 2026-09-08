@@ -82,7 +82,7 @@ jobs:
           Qwen2.5-Coder-3B / 7B - best coding quality
 
         Using a different filename? Set "model_name" in config.json.
-        Full guide: https://luckyyaduvanshiofficial.github.io/Codai/#download
+        Full guide: https://luckyyaduvanshiofficial.github.io/Codaipro/#download
         "@
         Set-Content -Path "$dest\models\README.txt" -Value $modelReadme
         Write-Host "Portable package assembled:"
@@ -137,7 +137,7 @@ jobs:
 
           ### First run
           1. Unzip anywhere writable (not `C:\Program Files`)
-          2. Drop one model into `models\` — default is `gemma-3-1b-it-Q4_K_M.gguf` (0.81 GB); see the [model guide](https://luckyyaduvanshiofficial.github.io/Codai/#download)
+          2. Drop one model into `models\` — default is `gemma-3-1b-it-Q4_K_M.gguf` (0.81 GB); see the [model guide](https://luckyyaduvanshiofficial.github.io/Codaipro/#download)
           3. Double-click `run.bat` and wait for `[READY]`
 
           ### System requirements
@@ -145,7 +145,7 @@ jobs:
           - 4 GB RAM minimum (2 GB works with the smallest models)
           - ~1 GB free for the app + 0.5–5 GB for one model
 
-          **Full changelog**: https://github.com/Luckyyaduvanshiofficial/Codai/compare/v2.1.2...${{ env.VERSION }}
+          **Full changelog**: https://github.com/Luckyyaduvanshiofficial/Codaipro/compare/v2.1.2...${{ env.VERSION }}
         draft: false
         prerelease: false
         files: CodaiPro-${{ env.VERSION }}-Portable-Windows.zip
