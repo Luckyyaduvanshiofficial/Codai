@@ -136,6 +136,19 @@ BUILD_V21.bat
 
 CodaiPro runs a local GGUF model through llama.cpp — no API keys, no cloud calls. You need one `.gguf` file in the `models/` folder (next to `launcher.py` or the exe). The app auto-detects whichever you install.
 
+**Weak lab PC? Take a tiny one — under 1 GB, runs on almost anything:**
+
+| Model | Size | Direct download (Q4_K_M) |
+|-------|------|--------------------------|
+| **Qwen3.5-0.8B** (newest) | 0.58GB | [Download](https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/resolve/main/Qwen_Qwen3.5-0.8B-Q4_K_M.gguf) · [Model page](https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF) |
+| Qwen3-0.6B | 0.48GB | [Download](https://huggingface.co/bartowski/Qwen_Qwen3-0.6B-GGUF/resolve/main/Qwen_Qwen3-0.6B-Q4_K_M.gguf) · [Model page](https://huggingface.co/bartowski/Qwen_Qwen3-0.6B-GGUF) |
+| Gemma 3 1B Instruct | 0.81GB | [Download](https://huggingface.co/bartowski/google_gemma-3-1b-it-GGUF/resolve/main/google_gemma-3-1b-it-Q4_K_M.gguf) · [Model page](https://huggingface.co/bartowski/google_gemma-3-1b-it-GGUF) |
+| Llama 3.2 1B Instruct | 0.81GB | [Download](https://huggingface.co/bartowski/Llama-3.2-1B-Instruct-GGUF/resolve/main/Llama-3.2-1B-Instruct-Q4_K_M.gguf) · [Model page](https://huggingface.co/bartowski/Llama-3.2-1B-Instruct-GGUF) |
+
+The Qwen 3 family thinks before it answers; CodaiPro strips the scratchpad so you only see the result (v2.1.2+).
+
+**When 2 GB is fine — a better coder:**
+
 | Model | Size | Best For | Source |
 |-------|------|----------|--------|
 | **Phi-3.5-mini** ⭐ | 2.3GB | Best speed/quality balance | [microsoft/Phi-3.5-mini-instruct-gguf](https://huggingface.co/microsoft/Phi-3.5-mini-instruct-gguf) |

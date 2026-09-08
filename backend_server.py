@@ -10,6 +10,7 @@ from pydantic import BaseModel
 from llama_cpp import Llama
 import uvicorn
 import os
+import re
 import threading
 from pathlib import Path
 from typing import Optional, List
@@ -187,7 +188,22 @@ async def complete_code(request: CompletionRequest):
             stream=False,
         )
 
-        result_text = response['choices'][0]['message']['content'].strip()
+        raw_text = response['choices'][0]['message']['content']
+
+        # Thinking models (Qwen3 / Qwen3.5) emit a <think> scratchpad before
+        # the answer. Strip closed blocks; if the token budget ran out
+        # mid-thought, tell the user instead of returning nothing.
+        cleaned = re.sub(r"<think>.*?</think>", "", raw_text, flags=re.DOTALL).strip()
+        if cleaned:
+            result_text = cleaned
+        elif "<think>" in raw_text:
+            result_text = (
+                "The model spent its whole token budget thinking and never answered. "
+                "Raise Max Length in Settings and try again."
+            )
+        else:
+            result_text = raw_text.strip()
+
         tokens_used = response['usage']['total_tokens']
 
         return CompletionResponse(

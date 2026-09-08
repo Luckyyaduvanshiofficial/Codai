@@ -520,6 +520,84 @@ code {
     white-space: nowrap;
 }
 
+.models h4 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+}
+
+.models h4 + .tiny-models,
+.models h4 + table,
+.models h4 + p + table {
+    margin-top: 0;
+}
+
+.models .tiny-models + .meta {
+    margin-top: 12px;
+}
+
+.models h4:not(:first-of-type) {
+    margin-top: var(--u9);
+}
+
+/* Tiny models — under 1 GB */
+.tiny-models {
+    list-style: none;
+}
+
+.tiny-models li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px var(--u4);
+    padding-block: 10px;
+    border-top: 1px solid var(--rule);
+}
+
+.tiny-models li:last-child {
+    border-bottom: 1px solid var(--rule);
+}
+
+.tm-name {
+    font-family: var(--sans);
+    font-size: 0.98rem;
+    font-weight: 600;
+}
+
+.tm-tag {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 7px;
+    border: 1px solid var(--red);
+    border-radius: 2px;
+    color: var(--red);
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    vertical-align: 2px;
+}
+
+.tm-size {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+}
+
+.tm-links {
+    margin-left: auto;
+    display: flex;
+    gap: var(--u4);
+}
+
+.tm-links a {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
 /* --------------------------------------------------------------------------
    Venues — timetable rows
    -------------------------------------------------------------------------- */

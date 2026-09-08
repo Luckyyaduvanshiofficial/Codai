@@ -10,9 +10,10 @@ echo Recommended Models:
 echo 1. Phi-3.5-mini (BEST - Balanced speed/quality - 2.3GB) ⭐
 echo 2. Qwen2.5-Coder-3B (Excellent for coding - 2GB)
 echo 3. Qwen2.5-Coder-7B (Most powerful - 4.7GB)
+echo 4. Tiny models for weak PCs (under 1 GB)
 echo.
 
-set /p choice="Enter your choice (1-3): "
+set /p choice="Enter your choice (1-4): "
 
 if "%choice%"=="1" (
     echo.
@@ -56,6 +57,29 @@ if "%choice%"=="3" (
     echo ALL parts into the 'models' folder - they are loaded together.
     echo.
     start https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct-GGUF/tree/main
+)
+
+if "%choice%"=="4" (
+    echo.
+    echo Selected: Tiny models for weak PCs (under 1 GB)
+    echo.
+    echo Pick one - copy the direct download link into your browser:
+    echo.
+    echo Qwen3.5-0.8B (0.58 GB, newest):
+    echo https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/resolve/main/Qwen_Qwen3.5-0.8B-Q4_K_M.gguf
+    echo.
+    echo Qwen3-0.6B (0.48 GB):
+    echo https://huggingface.co/bartowski/Qwen_Qwen3-0.6B-GGUF/resolve/main/Qwen_Qwen3-0.6B-Q4_K_M.gguf
+    echo.
+    echo Gemma 3 1B Instruct (0.81 GB):
+    echo https://huggingface.co/bartowski/google_gemma-3-1b-it-GGUF/resolve/main/google_gemma-3-1b-it-Q4_K_M.gguf
+    echo.
+    echo Llama 3.2 1B Instruct (0.81 GB):
+    echo https://huggingface.co/bartowski/Llama-3.2-1B-Instruct-GGUF/resolve/main/Llama-3.2-1B-Instruct-Q4_K_M.gguf
+    echo.
+    echo Then place the .gguf file in the 'models' folder.
+    echo.
+    start "" "https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF"
 )
 
 echo.

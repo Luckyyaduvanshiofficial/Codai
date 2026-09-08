@@ -78,30 +78,26 @@ jobs:
         body: |
           ## CodaiPro ${{ env.VERSION }}
 
-          Maintenance release: everything that broke while the project slept has been repaired. Same product, working installs, smarter AI output.
+          New recommended models for weak lab PCs, and cleaner answers from thinking models.
 
-          ### Fixed
-          - Fresh installs work again: `fastapi`, `uvicorn`, `requests` and `pydantic` are now declared (they were imported but never listed)
-          - AI engine upgraded to llama-cpp-python 0.3.x; removed the deprecated `f16_kv` and FastAPI `on_event` usage
-          - Every model now receives its own chat template — Phi-3.5 and Qwen2.5-Coder answers are no longer degraded by a hardcoded Phi-3 prompt
-          - Single-instance guard now watches the real backend port (8765, was 8000) and lockfiles are cleaned on exit
-          - The GUI no longer spawns a second backend alongside the launcher's
-          - Generation timeout raised to 300 s so slow lab machines stop showing fake errors
-          - GPU option actually works: CUDA build flag fixed, `CODAIPRO_GPU_LAYERS=99` offloads layers
-          - Website redesigned and live at https://luckyyaduvanshiofficial.github.io/Codai/ — with a real poll and live star count
+          ### New
+          - Four sub-1 GB models join the recommended list and run on almost any lab PC: **Qwen3.5-0.8B** (newest), Qwen3-0.6B, Gemma 3 1B Instruct, Llama 3.2 1B Instruct — with direct download links on the website and in `DOWNLOAD_MODEL.bat`
+          - Thinking models (Qwen3 / Qwen3.5) no longer show their scratchpad: the `<think>` block is stripped and you get the answer. If the model runs out of tokens mid-thought, you get a clear hint instead of an empty reply
 
-          ### Download options
-          - **Portable Windows**: unzip, run `CodaiPro_v21.exe`, no installation — perfect for lab environments and USB sticks
-          - **Source code**: clone and `pip install -r requirements.txt`
+          ### Fixed in v2.1.1 (recap)
+          - Fresh installs work again: all backend dependencies are declared
+          - AI engine upgraded to llama-cpp-python 0.3.x; every model gets its own chat template
+          - Single-instance guard watches the real backend port (8765); lockfiles are cleaned on exit; no duplicate backend spawn
+          - Generation timeout raised to 300 s; optional GPU offload via `CODAIPRO_GPU_LAYERS`
 
           ### First run
-          1. Download a model (Phi-3.5-mini 2.3 GB, Qwen2.5-Coder-3B 2 GB, or Qwen2.5-Coder-7B 4.7 GB) into the `models` folder — links in the [model guide](https://luckyyaduvanshiofficial.github.io/Codai/#download)
+          1. Download a model into the `models` folder — sub-1 GB picks and direct links: https://luckyyaduvanshiofficial.github.io/Codai/#download
           2. Run `CodaiPro_v21.exe`
 
           ### System requirements
           - Windows 10/11 (64-bit)
           - 4 GB RAM minimum
-          - 2 GB free storage + 2–5 GB for one model
+          - 2 GB free storage + 0.5–5 GB for one model
 
           **Full changelog**: https://github.com/Luckyyaduvanshiofficial/Codai/compare/git-tag-v2.1.0...${{ env.VERSION }}
         draft: false
