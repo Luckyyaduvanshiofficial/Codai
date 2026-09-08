@@ -9,7 +9,7 @@ echo.
 echo Recommended Models:
 echo 1. Phi-3.5-mini (BEST - Balanced speed/quality - 2.3GB) ⭐
 echo 2. Qwen2.5-Coder-3B (Excellent for coding - 2GB)
-echo 3. DeepSeek-Coder-6.7B (Most powerful - 4GB)
+echo 3. Qwen2.5-Coder-7B (Most powerful - 4.7GB)
 echo.
 
 set /p choice="Enter your choice (1-3): "
@@ -46,24 +46,23 @@ if "%choice%"=="2" (
 
 if "%choice%"=="3" (
     echo.
-    echo Selected: DeepSeek-Coder-6.7B
+    echo Selected: Qwen2.5-Coder-7B
     echo.
     echo Please download manually from:
-    echo https://huggingface.co/TheBloke/deepseek-coder-6.7B-instruct-GGUF/tree/main
+    echo https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct-GGUF/tree/main
     echo.
-    echo Download this file: deepseek-coder-6.7b-instruct.Q4_K_M.gguf
+    echo Download the q4_k_m GGUF file. If it is split into parts like
+    echo qwen2.5-coder-7b-instruct-q4_k_m-00001-of-00002.gguf, download
+    echo ALL parts into the 'models' folder - they are loaded together.
     echo.
-    echo Then place it in the 'models' folder.
-    echo.
-    start https://huggingface.co/TheBloke/deepseek-coder-6.7B-instruct-GGUF/tree/main
+    start https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct-GGUF/tree/main
 )
 
 echo.
 echo ========================================
 echo After downloading:
-echo 1. Move the .gguf file to the 'models' folder
-echo 2. Delete or rename the old TinyLlama model (optional)
-echo 3. Run START.bat to launch the app
+echo 1. Move the .gguf file(s) to the 'models' folder
+echo 2. Run the app with:  python launcher.py
 echo ========================================
 echo.
 pause

@@ -376,24 +376,40 @@ Type your question below and let's code! 🚀"""
         MessageBubble(self.chat_frame, "assistant", welcome)
     
     def start_backend(self):
-        """Start FastAPI backend server"""
+        """Connect to the FastAPI backend, starting it only if needed"""
         def start():
             global backend_process
             try:
-                # Find backend script
+                # Reuse a backend already started by launcher.py (in frozen
+                # builds launcher runs the backend in-process; spawning a
+                # subprocess of sys.executable would launch a second GUI copy)
+                try:
+                    response = requests.get(f"{BACKEND_URL}/health", timeout=1)
+                    if response.status_code == 200:
+                        self.backend_ready = True
+                        self.after(0, self.on_backend_ready)
+                        return
+                except Exception:
+                    pass
+
+                if getattr(sys, "frozen", False):
+                    raise RuntimeError(
+                        "Backend not reachable. Start CodaiPro using the launcher (CodaiPro_v21.exe)."
+                    )
+
+                # Running from source: start backend_server.py ourselves
                 backend_script = Path(__file__).parent / "backend_server.py"
-                
+
                 if not backend_script.exists():
                     raise FileNotFoundError("backend_server.py not found!")
-                
-                # Start backend process
+
                 backend_process = subprocess.Popen(
                     [sys.executable, str(backend_script)],
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
                     creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == 'win32' else 0
                 )
-                
+
                 # Wait for backend to be ready
                 max_retries = 30
                 for i in range(max_retries):
@@ -401,17 +417,17 @@ Type your question below and let's code! 🚀"""
                         response = requests.get(f"{BACKEND_URL}/health", timeout=1)
                         if response.status_code == 200:
                             self.backend_ready = True
-                            self.after(0, lambda: self.on_backend_ready())
+                            self.after(0, self.on_backend_ready)
                             return
                     except:
                         pass
                     time.sleep(1)
-                
+
                 raise TimeoutError("Backend failed to start in 30 seconds")
-                
+
             except Exception as e:
                 self.after(0, lambda: self.on_backend_error(str(e)))
-        
+
         thread = threading.Thread(target=start, daemon=True)
         thread.start()
     
@@ -462,7 +478,7 @@ Type your question below and let's code! 🚀"""
                         "temperature": temperature,
                         "system_prompt": system_prompt
                     },
-                    timeout=60
+                    timeout=300  # CPU generation of long answers can exceed 60s on lab machines
                 )
                 
                 if response.status_code == 200:
@@ -535,11 +551,14 @@ Type your question below and let's code! 🚀"""
             # Disable the close button immediately
             self.protocol("WM_DELETE_WINDOW", lambda: None)
             
-            # Release single instance locks first
+            # Release single instance locks first. launcher.py runs as
+            # __main__, so "import launcher" would load a fresh module copy
+            # whose lock globals are empty and release nothing.
             try:
-                import launcher
-                launcher.release_single_instance()
-                print("Released single instance locks")
+                import __main__
+                if hasattr(__main__, "release_single_instance"):
+                    __main__.release_single_instance()
+                    print("Released single instance locks")
             except Exception as e:
                 print(f"Error releasing locks: {e}")
             

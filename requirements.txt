@@ -1,6 +1,16 @@
 # CodaiPro Dependencies
-# Use Python 3.11 (NOT 3.13 - compatibility issues!)
+# Python 3.11 recommended. On Python 3.12/3.13 llama-cpp-python is built from
+# source and needs CMake + a C/C++ compiler (Visual Studio Build Tools on Windows).
 
+# GUI
 customtkinter==5.2.2
-llama-cpp-python==0.2.90
 pyperclip==1.8.2  # For clipboard support (copy code functionality)
+
+# Backend (FastAPI server)
+fastapi>=0.110,<1.0
+uvicorn>=0.27,<1.0
+pydantic>=2.6,<3.0
+requests>=2.31,<3.0
+
+# AI inference
+llama-cpp-python>=0.3.23,<0.4

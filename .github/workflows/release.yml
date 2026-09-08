@@ -14,37 +14,40 @@ on:
 jobs:
   build-windows:
     runs-on: windows-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'
-        
+
+    - name: Ensure models folder exists
+      run: mkdir models
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pyinstaller
-        
+
     - name: Build executable
       run: |
-        python -m PyInstaller --onedir --windowed --name "CodaiPro_v21" --noconsole --add-data "models;models" --hidden-import="uvicorn" --hidden-import="fastapi" --hidden-import="llama_cpp" --hidden-import="customtkinter" --hidden-import="tkinter" --hidden-import="PIL" --hidden-import="requests" --hidden-import="json" --hidden-import="threading" --hidden-import="queue" --hidden-import="time" --hidden-import="os" --hidden-import="sys" --hidden-import="ctypes" --hidden-import="socket" --collect-all="customtkinter" --collect-all="llama_cpp" launcher.py
-        
+        python -m PyInstaller --onedir --windowed --name "CodaiPro_v21" --noconsole --add-data "models;models" --hidden-import="uvicorn" --hidden-import="fastapi" --hidden-import="llama_cpp" --hidden-import="customtkinter" --hidden-import="tkinter" --hidden-import="requests" --hidden-import="json" --hidden-import="threading" --hidden-import="queue" --hidden-import="time" --hidden-import="os" --hidden-import="sys" --hidden-import="ctypes" --hidden-import="socket" --collect-all="customtkinter" --collect-all="llama_cpp" launcher.py
+
     - name: Create portable package
       run: |
         mkdir portable
         xcopy /e /i /q "dist\CodaiPro_v21" "portable\CodaiPro_v21"
-        
+
     - name: Create ZIP archive
       run: |
         powershell Compress-Archive -Path "portable\*" -DestinationPath "CodaiPro-v2.1-Portable-Windows.zip"
-        
+
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: CodaiPro-Windows-Portable
         path: CodaiPro-v2.1-Portable-Windows.zip
@@ -52,72 +55,58 @@ jobs:
   create-release:
     needs: build-windows
     runs-on: ubuntu-latest
-    
+    permissions:
+      contents: write
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
     - name: Download artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: CodaiPro-Windows-Portable
-        
+
     - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ github.event.inputs.version || github.ref_name }}
-        release_name: CodaiPro ${{ github.event.inputs.version || github.ref_name }}
+        name: CodaiPro ${{ github.event.inputs.version || github.ref_name }}
         body: |
           ## 🚀 CodaiPro ${{ github.event.inputs.version || github.ref_name }} - Enhanced Stability
-          
+
           ### ✨ What's New
           - Enhanced single instance protection (4-layer system)
           - Improved stability and crash prevention
           - Better memory management for lab environments
           - Clean exit strategies preventing background processes
-          
+
           ### 📥 Download Options
           - **Portable Windows**: Perfect for lab environments, no installation required
           - **Source Code**: For developers who want to build from source
-          
+
           ### 🎓 Perfect for Students
           - ✅ Works 100% offline
           - ✅ No internet connection required
           - ✅ Portable - run from USB drive
           - ✅ Lab-friendly and exam-ready
-          
+
           ### 🚀 Quick Start
           1. Download the portable version below
           2. Extract to your desired location
           3. Run `CodaiPro_v21.exe`
           4. Start coding with AI assistance!
-          
+
           ### 🐛 Bug Fixes
           - Fixed multiple instance opening issue
           - Resolved application restart loops
           - Improved process cleanup on exit
           - Enhanced mutex protection system
-          
+
           ### 📊 System Requirements
           - Windows 10/11 (64-bit)
           - 4GB RAM minimum
           - 2GB free storage space
-          
-          ---
-          
-          **Full Changelog**: https://github.com/luckyyaduvanshi/codaipro/compare/v2.0...v2.1
         draft: false
         prerelease: false
-        
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./CodaiPro-v2.1-Portable-Windows.zip
-        asset_name: CodaiPro-v2.1-Portable-Windows.zip
-        asset_content_type: application/zip
+        files: CodaiPro-v2.1-Portable-Windows.zip

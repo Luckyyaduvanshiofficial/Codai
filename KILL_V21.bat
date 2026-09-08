@@ -12,12 +12,13 @@ taskkill /f /im "python.exe" /fi "WINDOWTITLE eq CodaiPro*" 2>nul
 echo.
 echo Cleaning up lock files...
 del /q "%TEMP%\codaipro_v21.lock" 2>nul
+del /q "%TEMP%\codaipro_v21_port8765.lock" 2>nul
 del /q "%TEMP%\codaipro_v21_port8000.lock" 2>nul
 del /q "%TEMP%\codaipro_v2.lock" 2>nul
 
 echo.
-echo Freeing port 8000...
-for /f "tokens=5" %%a in ('netstat -aon ^| findstr :8000') do (
+echo Freeing port 8765 (backend port)...
+for /f "tokens=5" %%a in ('netstat -aon ^| findstr :8765') do (
     taskkill /f /pid %%a 2>nul
 )
 

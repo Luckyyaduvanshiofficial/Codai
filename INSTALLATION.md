@@ -151,18 +151,14 @@ Right-click CodaiPro_v21.exe → Run as administrator
 
 #### "Missing dependencies" (Python installation)
 ```bash
-# Reinstall requirements
+# Reinstall requirements (single source of truth)
 pip install --force-reinstall -r requirements.txt
-
-# Or use specific versions
-pip install customtkinter==5.2.0
-pip install fastapi==0.104.1
 ```
 
-#### "Port 8000 already in use"
+#### "Port 8765 already in use"
 ```bash
-# Kill processes using port 8000
-netstat -ano | findstr :8000
+# Kill processes using port 8765 (backend port)
+netstat -ano | findstr :8765
 taskkill /PID <process_id> /F
 
 # Or use the kill script

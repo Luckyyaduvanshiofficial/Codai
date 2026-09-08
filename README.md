@@ -79,14 +79,22 @@
 3. Extract and run: CodaiPro_v21.exe
 ```
 
+> **Note**: The portable zip does **not** include an AI model (it's ~2-5GB). Download one model into the `models` folder next to the exe — see [Downloading a Model](#-downloading-a-model). This is a one-time step; after that everything runs offline.
+
 ### Option 2: 🐍 Python Installation (For Developers)
 ```bash
 # Clone repository
 git clone https://github.com/luckyyaduvanshi/codaipro.git
 cd codaipro
 
-# Install dependencies
+# Install dependencies (Python 3.11 recommended)
 pip install -r requirements.txt
+
+# Download an AI model (one-time, needs internet)
+# Either run the helper...
+DOWNLOAD_MODEL.bat
+# ...or manually place a .gguf file into the models/ folder
+# (create the folder if it doesn't exist)
 
 # Run application
 python launcher.py
@@ -111,14 +119,32 @@ BUILD_V21.bat
 ### For Students (Lab Environment)
 1. **Download** the portable version from [releases](https://github.com/luckyyaduvanshi/codaipro/releases)
 2. **Extract** to your USB drive or desktop
-3. **Double-click** `CodaiPro_v21.exe`
-4. **Start coding** with AI assistance!
+3. **Download a model** (one-time, at home) into the `models` folder — see [below](#-downloading-a-model)
+4. **Double-click** `CodaiPro_v21.exe`
+5. **Start coding** with AI assistance!
 
 ### For Developers
 1. **Clone** the repository
-2. **Install** Python 3.11+ and dependencies
-3. **Run** `python launcher.py`
-4. **Customize** and contribute!
+2. **Install** Python 3.11 and dependencies (`pip install -r requirements.txt`)
+3. **Download** a model into the `models/` folder
+4. **Run** `python launcher.py`
+5. **Customize** and contribute!
+
+---
+
+## 🧠 Downloading a Model
+
+CodaiPro runs a local GGUF model through llama.cpp — no API keys, no cloud calls. You need one `.gguf` file in the `models/` folder (next to `launcher.py` or the exe). The app auto-detects whichever you install.
+
+| Model | Size | Best For | Source |
+|-------|------|----------|--------|
+| **Phi-3.5-mini** ⭐ | 2.3GB | Best speed/quality balance | [microsoft/Phi-3.5-mini-instruct-gguf](https://huggingface.co/microsoft/Phi-3.5-mini-instruct-gguf) |
+| **Qwen2.5-Coder-3B** | 2GB | Fast coding on low-spec machines | [Qwen/Qwen2.5-Coder-3B-Instruct-GGUF](https://huggingface.co/Qwen/Qwen2.5-Coder-3B-Instruct-GGUF) |
+| **Qwen2.5-Coder-7B** | 4.7GB | Most powerful (q4_k_m) | [Qwen/Qwen2.5-Coder-7B-Instruct-GGUF](https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct-GGUF) |
+
+- Pick the **q4** / **q4_k_m** quantization for the best CPU performance.
+- If a model downloads as split parts (`...-00001-of-00002.gguf`), keep **all** parts together in `models/` — llama.cpp loads them as one.
+- Run `DOWNLOAD_MODEL.bat` for a guided download with these links.
 
 ---
 
@@ -127,8 +153,8 @@ BUILD_V21.bat
 ### System Requirements
 - **OS**: Windows 10/11 (64-bit)
 - **RAM**: 4GB minimum, 8GB recommended
-- **Storage**: 2GB free space
-- **Python**: 3.11+ (for source installation)
+- **Storage**: 2GB free space + 2-5GB for one AI model
+- **Python**: 3.11 recommended (3.12/3.13 work but build llama-cpp-python from source, needing CMake + a C/C++ compiler)
 
 ### Architecture
 - **Frontend**: CustomTkinter (Modern UI)
@@ -137,10 +163,11 @@ BUILD_V21.bat
 - **Build System**: PyInstaller (Portable Executable)
 
 ### Key Technologies
-- **Single Instance Protection**: Windows Mutex + Port Locking
+- **Single Instance Protection**: Windows Mutex + port check (8765)
 - **Memory Management**: Optimized for low-resource environments
 - **Error Handling**: Comprehensive crash prevention
-- **Auto-Recovery**: Session persistence and restoration
+- **Chat Export**: Save conversations as JSON
+- **Optional GPU Acceleration**: CUDA build via `INSTALL_GPU_SUPPORT.bat` + `CODAIPRO_GPU_LAYERS` env var (2-5x faster responses)
 
 ---
 

@@ -44,7 +44,6 @@ venv\Scripts\activate  # Windows
 
 # Install dependencies
 pip install -r requirements.txt
-pip install -r requirements-dev.txt  # Development dependencies
 ```
 
 ### 3. Create Feature Branch

@@ -9,38 +9,34 @@ echo.
 
 REM Get Python path
 for /f "tokens=*" %%i in ('python -c "import sys; print(sys.executable)"') do set PYTHON_EXE=%%i
-echo [1/6] Found Python: %PYTHON_EXE%
+echo [1/5] Found Python: %PYTHON_EXE%
 
 REM Install PyInstaller if needed
 echo.
-echo [2/6] Checking PyInstaller...
+echo [2/5] Checking PyInstaller...
 "%PYTHON_EXE%" -m pip show pyinstaller >nul 2>&1
 if %errorlevel% neq 0 (
     "%PYTHON_EXE%" -m pip install --quiet pyinstaller
 )
 
-REM Install dependencies
+REM Install dependencies (requirements.txt includes llama-cpp-python)
 echo.
-echo [3/6] Installing dependencies...
+echo [3/5] Installing dependencies...
 "%PYTHON_EXE%" -m pip install --quiet -r requirements.txt
 
-REM Install llama-cpp-python with pre-built wheels
+REM Check launcher exists and ensure models folder exists
 echo.
-echo [4/6] Installing llama-cpp-python (pre-built)...
-"%PYTHON_EXE%" -m pip install --quiet llama-cpp-python
-
-REM Check launcher exists
-echo.
-echo [5/6] Checking launcher...
+echo [4/5] Checking launcher...
 if not exist "launcher.py" (
     echo ERROR: launcher.py not found!
     pause
     exit /b 1
 )
+if not exist "models" mkdir "models"
 
 REM Build with PyInstaller
 echo.
-echo [6/6] Building package (this takes 5-10 min)...
+echo [5/5] Building package (this takes 5-10 min)...
 "%PYTHON_EXE%" -m PyInstaller ^
     --onedir ^
     --windowed ^
@@ -52,7 +48,6 @@ echo [6/6] Building package (this takes 5-10 min)...
     --hidden-import="llama_cpp" ^
     --hidden-import="customtkinter" ^
     --hidden-import="tkinter" ^
-    --hidden-import="PIL" ^
     --hidden-import="requests" ^
     --hidden-import="json" ^
     --hidden-import="threading" ^

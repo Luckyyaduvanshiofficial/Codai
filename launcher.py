@@ -15,6 +15,9 @@ _mutex_name = "Local\\CodaiPro_v21_SingleInstance"
 LOCK_FILE = None
 PORT_LOCK_FILE = None
 
+# Must match backend_server.start_server() and BACKEND_URL in codaipro_v2.py
+BACKEND_PORT = 8765
+
 
 def _is_port_in_use(port):
     """Check if a port is already in use."""
@@ -34,11 +37,11 @@ def acquire_single_instance():
     """
     global _mutex, LOCK_FILE, PORT_LOCK_FILE
     
-    # Layer 1: Check if port 8000 is already in use
-    if _is_port_in_use(8000):
+    # Layer 1: Check if the backend port is already in use
+    if _is_port_in_use(BACKEND_PORT):
         print("=" * 60)
         print("  CodaiPro v2.1 is already running!")
-        print("  (Backend server port 8000 is in use)")
+        print(f"  (Backend server port {BACKEND_PORT} is in use)")
         print("=" * 60)
         print("\nPlease close the existing instance first.")
         input("\nPress Enter to exit...")
@@ -99,10 +102,10 @@ def acquire_single_instance():
             print(f"Warning: Could not create lockfile: {e}")
             
         # Layer 3: Create port lockfile
-        port_lock_path = os.path.join(tempfile.gettempdir(), "codaipro_v21_port8000.lock")
+        port_lock_path = os.path.join(tempfile.gettempdir(), f"codaipro_v21_port{BACKEND_PORT}.lock")
         try:
             with open(port_lock_path, 'w') as f:
-                f.write(f"8000\n{os.getpid()}\n{time.time()}")
+                f.write(f"{BACKEND_PORT}\n{os.getpid()}\n{time.time()}")
             PORT_LOCK_FILE = port_lock_path
         except Exception as e:
             print(f"Warning: Could not create port lockfile: {e}")
